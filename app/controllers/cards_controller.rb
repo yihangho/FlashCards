@@ -20,6 +20,11 @@ class CardsController < ApplicationController
     @card = Card.find_by(:id => params[:id])
   end
 
+  def random
+    @card = Card.all.sample
+    render 'show'
+  end
+
   private
 
   def card_params
