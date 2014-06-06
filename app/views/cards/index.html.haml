@@ -1,2 +1,5 @@
-%h1 Cards#index
-%p Find me in app/views/cards/index.html.haml
+%h1 Cards
+
+%ul
+  - @cards.each do |card|
+    %li= link_to card.word, card

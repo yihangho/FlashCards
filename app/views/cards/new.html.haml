@@ -1,2 +1,9 @@
-%h1 Cards#new
-%p Find me in app/views/cards/new.html.haml
+%h1 New Card
+
+= form_for(@card) do |f|
+  - [:word, :word_type, :definition, :synonyms, :antonyms, :sentence].each do |sym|
+    %div
+      = f.label sym
+      = f.text_field sym
+
+  = f.submit "Save"
