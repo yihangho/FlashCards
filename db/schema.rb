@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140606123041) do
+ActiveRecord::Schema.define(version: 20140606135425) do
 
   create_table "cards", force: true do |t|
     t.string   "word"
-    t.string   "type"
+    t.string   "word_type"
     t.string   "definition"
     t.string   "synonyms"
     t.string   "antonyms"
