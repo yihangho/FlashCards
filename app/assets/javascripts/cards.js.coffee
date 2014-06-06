@@ -4,6 +4,9 @@
 
 $(document).ready ->
   $("#show-hint-btn").click ->
-    $($(".hidden.card")[0]).removeClass("hidden") if $(".hidden.card").length
-    $(this).hide() unless $(".card.hidden").length
+    if $(".card.hidden").length
+      $($(".hidden.card")[0]).removeClass("hidden")
+      $(this).text("Get a new card") unless $(".hidden.card").length
+    else
+      window.location.reload()
     false
