@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140606135425) do
+ActiveRecord::Schema.define(version: 20140606165548) do
 
   create_table "cards", force: true do |t|
     t.string   "word"
-    t.string   "word_type"
-    t.string   "definition"
-    t.string   "synonyms"
-    t.string   "antonyms"
-    t.string   "sentence"
+    t.string   "word_type",  default: ""
+    t.string   "definition", default: ""
+    t.string   "synonyms",   default: ""
+    t.string   "antonyms",   default: ""
+    t.string   "sentence",   default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
   end
