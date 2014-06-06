@@ -6,4 +6,8 @@
       = f.label sym
       = f.text_field sym
 
+  %div
+    = f.label :yaml_file, "Import YAML"
+    = f.file_field :yaml_file
+
   = f.submit "Save"
