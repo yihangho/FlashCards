@@ -1,3 +1,4 @@
 %h1 Cards
 
-%h2= @card.word
+- [:word, :definition, :sentence].shuffle.each do |sym|
+  = render "partials/cards/show/#{sym}.html.haml"
