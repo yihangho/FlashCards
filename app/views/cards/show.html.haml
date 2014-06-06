@@ -1,4 +1,6 @@
 %h1 Cards
 
-- [:word, :definition, :sentence].shuffle.each do |sym|
-  = render "partials/cards/show/#{sym}.html.haml"
+- [:word, :definition, :sentence].shuffle.each_with_index do |sym, idx|
+  = render "partials/cards/show/#{sym}.html.haml", :idx => idx
+
+%a.btn.btn-primary#show-hint-btn{:href => "#"} Show Hint

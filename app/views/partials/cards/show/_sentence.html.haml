@@ -1,2 +1,4 @@
-- unless @card.sentence.empty?
-  .well= @card.sentence
+- html_classes = ["well", "card"]
+- html_classes << "hidden" if idx > 0
+
+%div{:class => html_classes}= @card.sentence

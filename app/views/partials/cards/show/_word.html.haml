@@ -1,1 +1,4 @@
-.well #{@card.word} (<i>#{@card.word_type}</i>)
+- html_classes = ["well", "card"]
+- html_classes << "hidden" if idx > 0
+
+%div{:class => html_classes} #{@card.word} (<i>#{@card.word_type}</i>)

@@ -1,23 +1,25 @@
-- unless @card.definition.empty?
-  .well
-    = @card.definition
+- html_classes = ["well", "card"]
+- html_classes << "hidden" if idx > 0
 
-    - unless @card.synonyms.empty?
-      %p Synonyms:
-      %ul
-        - @card.synonyms.split(',').each do |item|
-          - target = Card.find_by(:word => item.strip)
-          - if target
-            %li= link_to target.word, target
-          - else
-            %li= item.strip
+%div{:class => html_classes}
+  = @card.definition
 
-    - unless @card.antonyms.empty?
-      %p Antonyms:
-      %ul
-        - @card.antonyms.split(',').each do |item|
-          - target = Card.find_by(:word => item.strip)
-          - if target
-            %li= link_to target.word, target
-          - else
-            %li= item.strip
+  - unless @card.synonyms.empty?
+    %p Synonyms:
+    %ul
+      - @card.synonyms.split(',').each do |item|
+        - target = Card.find_by(:word => item.strip)
+        - if target
+          %li= link_to target.word, target
+        - else
+          %li= item.strip
+
+  - unless @card.antonyms.empty?
+    %p Antonyms:
+    %ul
+      - @card.antonyms.split(',').each do |item|
+        - target = Card.find_by(:word => item.strip)
+        - if target
+          %li= link_to target.word, target
+        - else
+          %li= item.strip
