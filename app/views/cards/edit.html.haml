@@ -1,0 +1,9 @@
+%h1 Edit Card
+
+= form_for(@card) do |f|
+  - [:word, :word_type, :definition, :synonyms, :antonyms, :sentence].each do |sym|
+    %div
+      = f.label sym
+      = f.text_field sym
+
+  = f.submit "Update"

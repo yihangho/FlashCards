@@ -64,6 +64,24 @@ class CardsController < ApplicationController
     render :plain => "OK"
   end
 
+  def edit
+    @card = Card.find_by(:id => params[:id])
+    redirect_to cards_path unless @card
+  end
+
+  def update
+    @card = Card.find_by(:id => params[:id])
+    if @card
+      if @card.update_attributes(card_params)
+        render 'show'
+      else
+        render 'edit'
+      end
+    else
+      redirect_to cards_path
+    end
+  end
+
   private
 
   def card_params

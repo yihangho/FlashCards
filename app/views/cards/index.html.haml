@@ -2,4 +2,4 @@
 
 %ul
   - @cards.each do |card|
-    %li= link_to card.word, card
+    %li #{link_to(card.word, card)} (#{link_to("Edit", edit_card_path(card))})
