@@ -7,6 +7,6 @@ class Card < ActiveRecord::Base
   def weighted_random_order_score(now = Time.now, max_score = nil)
     hours = ((now - updated_at.to_time)/3600).ceil
     max_score = Card.order(:rating => :desc).take.rating if max_score.nil?
-    (max_score + 1 - rating) * hours
+    ((max_score + 1 - rating) ** 1.5).ceil * hours
   end
 end
