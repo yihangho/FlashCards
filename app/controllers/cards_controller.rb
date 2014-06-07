@@ -46,6 +46,12 @@ class CardsController < ApplicationController
     end
     choice = (1..cards.last[:score]).to_a.sample
     @card = cards.bsearch { |card| card[:score] >= choice }[:card]
+
+    if ["word", "definition", "sentence"].include?(params[:style])
+      @order = [:word, :definition, :sentence].shuffle
+      @order.delete(params[:style].to_sym)
+      @order.unshift(params[:style].to_sym)
+    end
     render 'show'
   end
 
