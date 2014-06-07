@@ -35,6 +35,15 @@ class CardsController < ApplicationController
     render 'show'
   end
 
+  def rate
+    card = Card.find_by(:id => params[:id])
+    rating = params[:rating].to_i
+    if card
+      card.update_attribute(:rating, card.rating + rating)
+    end
+    render :plain => "OK"
+  end
+
   private
 
   def card_params

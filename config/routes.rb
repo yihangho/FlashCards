@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  patch 'cards/rate/:id' => 'cards#rate'
   resources :cards, :only => [:index, :new, :create, :show]
   get 'random' => 'cards#random'
 

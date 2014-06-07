@@ -3,10 +3,24 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).ready ->
+  rate = (id, score) ->
+    $.ajax("/cards/rate/#{id}",
+      data:
+        rating: score
+      complete: ->
+        window.location.reload()
+      type: "PATCH")
+
   $("#show-hint-btn").click ->
     if $(".card.hidden").length
       $($(".hidden.card")[0]).removeClass("hidden")
-      $(this).text("Get a new card") unless $(".hidden.card").length
-    else
-      window.location.reload()
+      $(this).addClass("hidden") unless $(".hidden.card").length
+    false
+
+  $("#thumbs-up-btn").click ->
+    rate($(this).data("card-id"), 1)
+    false
+
+  $("#thumbs-down-btn").click ->
+    rate($(this).data("card-id"), -1)
     false
