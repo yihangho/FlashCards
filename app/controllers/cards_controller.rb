@@ -31,7 +31,21 @@ class CardsController < ApplicationController
   end
 
   def random
-    @card = Card.all.sample
+    now = Time.now
+    max_score = Card.order(:rating => :desc).take.rating
+    cards = Card.all
+    cards = cards.collect do |card|
+      {
+        :card => card,
+        :score => card.weighted_random_order_score(now, max_score)
+      }
+    end
+    cards.each_index do |i|
+      next if i == 0
+      cards[i][:score] += cards[i-1][:score]
+    end
+    choice = (1..cards.last[:score]).to_a.sample
+    @card = cards.bsearch { |card| card[:score] >= choice }[:card]
     render 'show'
   end
 
