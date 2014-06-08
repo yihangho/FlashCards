@@ -1,5 +1,4 @@
 - html_classes = ["well", "card"]
 - html_classes << "hidden" if idx > 0
 
-- unless @card.sentence.empty?
-  %div{:class => html_classes}= @card.sentence
+%div{:class => html_classes}= @card.sentence
