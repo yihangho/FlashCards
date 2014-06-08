@@ -46,6 +46,9 @@ class CardsController < ApplicationController
         elsif /^(?<first>\d+)\-(?<last>\d+)$/ =~ item
           result = Card.where("id >= #{first.to_i} AND id <= #{last.to_i}")
           cards |= result if result.any?
+        elsif /^score\s*(?<op>=|\<|\<=|\>|\>=)\s*(?<score>\d+)$/ =~ item
+          result = Card.where("rating #{op} #{score}")
+          cards |= result if result.any?
         else
           result = Card.find_by(:word => item)
           cards << result if result
