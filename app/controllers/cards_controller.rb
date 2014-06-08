@@ -32,12 +32,31 @@ class CardsController < ApplicationController
 
   def random
     now = Time.now
-    max_score = Card.order(:rating => :desc).take.rating
-    cards = Card.all
+    if params[:cards].nil? || params[:cards] == "all"
+      cards = Card.all
+      max_rating = Card.order(:rating => :desc).take.rating
+    else
+      cards = []
+      max_rating = -1e9
+      cards_list = params[:cards].split(',').map { |x| x.strip }
+      cards_list.each do |item|
+        if /^\d*$/ =~ item
+          result = Card.find_by(:id => item.to_i)
+          cards << result if result
+        elsif /^(?<first>\d+)\-(?<last>\d+)$/ =~ item
+          result = Card.where("id >= #{first.to_i} AND id <= #{last.to_i}")
+          cards |= result if result.any?
+        else
+          result = Card.find_by(:word => item)
+          cards << result if result
+        end
+      end
+      cards.each { |card| max_rating = card.rating > max_rating ? card.rating : max_rating }
+    end
     cards = cards.collect do |card|
       {
         :card => card,
-        :score => card.weighted_random_order_score(now, max_score)
+        :score => card.weighted_random_order_score(now, max_rating)
       }
     end
     cards.each_index do |i|
