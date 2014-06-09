@@ -49,6 +49,9 @@ class CardsController < ApplicationController
         if /^\d*$/ =~ item
           result = Card.find_by(:id => item.to_i)
           cards << result if result
+        elsif /^\-(?<count>\d+)$/ =~ item
+          result = Card.last(count.to_i)
+          cards |= result if result.any?
         elsif /^(?<first>\d+)\-(?<last>\d+)$/ =~ item
           result = Card.where("id >= #{first.to_i} AND id <= #{last.to_i}")
           cards |= result if result.any?
