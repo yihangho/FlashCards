@@ -37,6 +37,11 @@ class TodosController < ApplicationController
     end
   end
 
+  def destroy
+    Todo.find(params[:id]).delete
+    redirect_to todos_path
+  end
+
   def new_card
     todo = Todo.find_by(:id => params[:id])
     if todo
