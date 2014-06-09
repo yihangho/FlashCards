@@ -5,6 +5,8 @@ class TodosController < ApplicationController
 
   def new
     @todo = Todo.new
+    @title = "New TODO"
+    render 'todo_form'
   end
 
   def create
@@ -19,6 +21,8 @@ class TodosController < ApplicationController
   def edit
     begin
       @todo = Todo.find(params[:id])
+      @title = "Edit TODO"
+      render 'todo_form'
     rescue
       render_404 "There is no such TODO."
     end

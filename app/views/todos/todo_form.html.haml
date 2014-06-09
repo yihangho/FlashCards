@@ -1,8 +1,8 @@
-%h1 Edit TODO
+- @title ||= "TODO Form"
+%h1= @title
 
 = form_for(@todo) do |f|
   = f.label :word
   = f.text_field :word
 
   = f.submit "Update"
-  
