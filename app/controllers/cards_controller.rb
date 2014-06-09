@@ -19,6 +19,8 @@ class CardsController < ApplicationController
     else
       @card = Card.create(card_params)
       if @card.save
+        todo = Todo.find_by(:word => @card.word)
+        todo.delete if todo
         render 'show'
       else
         render 'new'
