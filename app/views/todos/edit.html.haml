@@ -1,0 +1,8 @@
+%h1 Edit TODO
+
+= form_for(@todo) do |f|
+  = f.label :word
+  = f.text_field :word
+
+  = f.submit "Update"
+  

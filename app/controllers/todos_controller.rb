@@ -16,6 +16,27 @@ class TodosController < ApplicationController
     end
   end
 
+  def edit
+    begin
+      @todo = Todo.find(params[:id])
+    rescue
+      render_404 "There is no such TODO."
+    end
+  end
+
+  def update
+    begin
+      @todo = Todo.find(params[:id])
+      if @todo.update_attributes(todo_params)
+        redirect_to todos_path
+      else
+        render 'edit'
+      end
+    rescue
+      render_404 "There is no such TODO."
+    end
+  end
+
   def new_card
     todo = Todo.find_by(:id => params[:id])
     if todo

@@ -2,4 +2,4 @@
 
 %ul
   - @todos.each do |todo|
-    %li #{todo.word} (#{link_to("New Card", new_card_from_todo_path(todo))})
+    %li #{todo.word} (#{link_to("New Card", new_card_from_todo_path(todo))}, #{link_to("Edit", edit_todo_path(todo))})
