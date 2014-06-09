@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   patch 'cards/rate/:id' => 'cards#rate'
   get 'todos/:id/new_card' => 'todos#new_card', :as => :new_card_from_todo
-  resources :cards, :only => [:index, :new, :create, :show, :edit, :update]
-  resources :todos, :only => [:index, :new, :create, :edit, :update]
+  resources :cards, :except => :destroy
+  resources :todos, :except => :show
   get 'random(/:cards(/:style))' => 'cards#random'
 
   # The priority is based upon order of creation: first created -> highest priority.
