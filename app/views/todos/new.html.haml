@@ -1,2 +1,8 @@
-%h1 Todos#new
-%p Find me in app/views/todos/new.html.haml
+%h1 New TODO
+
+= form_for(@todo) do |f|
+  = f.label :word
+  = f.text_field :word
+
+  = f.submit "Save"
+  
