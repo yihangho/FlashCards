@@ -24,20 +24,16 @@ class TodosController < ApplicationController
       @title = "Edit TODO"
       render 'todo_form'
     rescue
-      render_404 "There is no such TODO."
+      redirect_to todos_path
     end
   end
 
   def update
-    begin
-      @todo = Todo.find(params[:id])
-      if @todo.update_attributes(todo_params)
-        redirect_to todos_path
-      else
-        render 'edit'
-      end
-    rescue
-      render_404 "There is no such TODO."
+    @todo = Todo.find(params[:id])
+    if @todo.update_attributes(todo_params)
+      redirect_to todos_path
+    else
+      render 'edit'
     end
   end
 

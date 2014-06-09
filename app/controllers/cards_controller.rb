@@ -84,14 +84,10 @@ class CardsController < ApplicationController
   end
 
   def rate
-    begin
-      card = Card.find_by(:id => params[:id])
-      rating = params[:rating].to_i
-      card.update_attribute(:rating, card.rating + rating)
-      render :plain => "OK"
-    rescue
-      render_404 "No such card."
-    end
+    card = Card.find_by(:id => params[:id])
+    rating = params[:rating].to_i
+    card.update_attribute(:rating, card.rating + rating)
+    render :plain => "OK"
   end
 
   def edit
@@ -103,15 +99,11 @@ class CardsController < ApplicationController
   end
 
   def update
-    begin
-      @card = Card.find(params[:id])
-      if @card.update_attributes(card_params)
-        render 'show'
-      else
-        render 'edit'
-      end
-    rescue
-      render_404 "No such card."
+    @card = Card.find(params[:id])
+    if @card.update_attributes(card_params)
+      render 'show'
+    else
+      render 'edit'
     end
   end
 
