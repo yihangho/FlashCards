@@ -16,6 +16,16 @@ class TodosController < ApplicationController
     end
   end
 
+  def new_card
+    todo = Todo.find_by(:id => params[:id])
+    if todo
+      @card = Card.new(:word => todo.word)
+      render 'cards/new'
+    else
+      redirect_to todos_path
+    end
+  end
+
   private
 
   def todo_params
