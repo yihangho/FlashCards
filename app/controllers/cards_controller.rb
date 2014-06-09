@@ -30,7 +30,11 @@ class CardsController < ApplicationController
 
   def show
     begin
-      @card = Card.find(params[:id])
+      if /^\d+/ =~ params[:id]
+        @card = Card.find(params[:id])
+      else
+        @card = Card.find_by!(:word => params[:id])
+      end
     rescue
       redirect_to cards_path
     end
