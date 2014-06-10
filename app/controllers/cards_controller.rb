@@ -99,7 +99,7 @@ class CardsController < ApplicationController
 
   def edit
     begin
-      @card = Card.find(:params[:id])
+      @card = Card.find(params[:id])
     rescue
       redirect_to cards_path
     end
