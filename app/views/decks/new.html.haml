@@ -4,4 +4,10 @@
   = f.label :title
   = f.text_field :title
 
+  %ul.list-unstyled
+    - @cards.each do |card|
+      %li
+        = check_box_tag("card-#{card.id}")
+        = label_tag("card-#{card.id}", card.word)
+
   = f.submit "Create"

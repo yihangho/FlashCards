@@ -11,6 +11,7 @@ class DecksController < ApplicationController
   def create
     @deck = Deck.create(deck_params)
     if @deck.save
+      @deck.card_ids |= selected_cards_ids
       redirect_to decks_path
     else
       render 'new'
@@ -21,5 +22,15 @@ class DecksController < ApplicationController
 
   def deck_params
     params.require(:deck).permit(:title)
+  end
+
+  def selected_cards_ids
+    output = []
+    params.each do |k,_|
+      if /^card-(?<id>\d+)$/ =~ k
+        output << id.to_i
+      end
+    end
+    output
   end
 end
