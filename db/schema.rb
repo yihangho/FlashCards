@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610130139) do
+ActiveRecord::Schema.define(version: 20140610130234) do
 
   create_table "cards", force: true do |t|
     t.string   "word"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 20140610130139) do
 
   add_index "cards", ["rating"], name: "index_cards_on_rating"
   add_index "cards", ["word"], name: "index_cards_on_word"
+
+  create_table "cards_decks", id: false, force: true do |t|
+    t.integer "card_id"
+    t.integer "deck_id"
+  end
+
+  add_index "cards_decks", ["card_id", "deck_id"], name: "index_cards_decks_on_card_id_and_deck_id"
+  add_index "cards_decks", ["deck_id", "card_id"], name: "index_cards_decks_on_deck_id_and_card_id"
 
   create_table "decks", force: true do |t|
     t.string   "title"

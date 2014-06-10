@@ -1,4 +1,5 @@
 class Card < ActiveRecord::Base
+  has_and_belongs_to_many :decks
   validates :word, :presence => true
 
   # weighted_random_order_score is the relative likelyhood of any instance being
