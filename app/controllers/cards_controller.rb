@@ -29,6 +29,8 @@ class CardsController < ApplicationController
   end
 
   def show
+    @order = [:word, :definition, :sentence]
+    @show_all = true
     begin
       if /^\d+/ =~ params[:id]
         @card = Card.find(params[:id])
