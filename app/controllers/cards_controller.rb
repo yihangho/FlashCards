@@ -65,8 +65,14 @@ class CardsController < ApplicationController
           result = Card.where("rating #{op} #{score}")
           cards |= result if result.any?
         else
-          result = Card.find_by(:word => item)
-          cards << result if result
+          deck = Deck.find_by(:title => item)
+          if deck
+            result = deck.cards
+            cards |= result if result.any?
+          else
+            result = Card.find_by(:word => item)
+            cards << result if result
+          end
         end
       end
       cards.each { |card| max_rating = card.rating > max_rating ? card.rating : max_rating }
