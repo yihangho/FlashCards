@@ -1,10 +1,8 @@
 %h1 Cards
-- @order ||= [:word, :definition, :sentence].shuffle
-- @order.delete_if { |sym| @card.send(sym).empty? }
-- @order.each_with_index do |sym, idx|
-  = render :partial => "partials/cards/show/#{sym}.html.haml", :locals => {:card => @card, :show => @show_all || idx == 0}
 
-- unless @show_all || @order.length == 1
+= render :partial => 'partials/cards/card', :locals => {:card => @card, :show_all => @show_all, :order => @order}
+
+- unless @show_all
   %a.btn.btn-primary#show-hint-btn{:href => "#"} Show Hint
 %a.btn.btn-success#thumbs-up-btn{:href => "#", :data => {:card_id => @card.id}} Thumbs Up
 %a.btn.btn-danger#thumbs-down-btn{:href => "#", :data => {:card_id => @card.id}} Thumbs Down

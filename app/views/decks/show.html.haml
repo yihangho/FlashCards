@@ -2,8 +2,8 @@
 
 %a.btn.btn-default{:href => random_path(@deck.title)} Randomize this Deck
 
+- order = [:word, :definition, :sentence]
 - @deck.cards.each do |card|
-  - [:word, :definition, :sentence].each do |sym|
-    = render :partial => "partials/cards/show/#{sym}", :locals => {:card => card, :show => true} unless card.send(sym).empty?
+  = render :partial => "partials/cards/card", :locals => {:card => card, :show_all => true, :order => order}
   - unless card == @deck.cards.last
     %hr

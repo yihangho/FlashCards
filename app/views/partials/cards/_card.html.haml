@@ -1,0 +1,5 @@
+- show_all = false if show_all.nil?
+- order ||= [:word, :definition, :sentence].shuffle
+- order.delete_if { |sym| card.send(sym).empty? }
+- order.each_with_index do |sym, idx|
+  = render :partial => "partials/cards/#{sym}", :locals => {:card => card, :show => show_all || idx == 0}
