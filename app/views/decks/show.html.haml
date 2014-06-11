@@ -1,5 +1,6 @@
 %h1= @deck.title
-- @show_all = true
+
+%a.btn.btn-default{:href => random_path(@deck.title)} Randomize this Deck
 
 - @deck.cards.each do |card|
   - [:word, :definition, :sentence].each do |sym|
