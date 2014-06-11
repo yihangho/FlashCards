@@ -1,6 +1,7 @@
 %h1= @deck.title
 
-%a.btn.btn-default{:href => random_path(@deck.title)} Randomize this Deck
+%a.btn.btn-primary{:href => random_path(@deck.title)} Randomize this Deck
+%a.btn.btn-default{:href => edit_deck_path(@deck)} Edit Deck
 
 - order = [:word, :definition, :sentence]
 - @deck.cards.each do |card|

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'todos/:id/new_card' => 'todos#new_card', :as => :new_card_from_todo
   resources :cards, :except => :destroy
   resources :todos, :except => :show
-  resources :decks, :only => [:index, :new, :create, :show]
+  resources :decks, :except => :destroy
   get 'random(/:cards(/:style))' => 'cards#random', :as => :random
 
   # The priority is based upon order of creation: first created -> highest priority.

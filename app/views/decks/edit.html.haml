@@ -1,0 +1,13 @@
+%h1 Edit Deck
+
+= form_for(@deck) do |f|
+  = f.label :title
+  = f.text_field :title
+
+  %div.selected-cards
+    - @deck.cards.each do |card|
+      %a.remove-card{:href => '#', :data => {:id => card.id}}= card.word
+
+  = select_tag :card_id, options_from_collection_for_select(Card.all, :id, :word)
+
+  = f.submit "Save", :class => "btn btn-primary"
