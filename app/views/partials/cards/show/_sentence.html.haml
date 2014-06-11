@@ -1,4 +1,4 @@
 - html_classes = ["well", "card"]
-- html_classes << "hidden" unless @show_all || idx == 0
+- html_classes << "hidden" unless show
 
-%div{:class => html_classes}= @card.sentence
+%div{:class => html_classes}= card.sentence
