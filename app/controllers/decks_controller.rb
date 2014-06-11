@@ -14,6 +14,7 @@ class DecksController < ApplicationController
       @deck.card_ids |= selected_cards_ids
       redirect_to decks_path
     else
+      @cards = Card.all
       render 'new'
     end
   end
