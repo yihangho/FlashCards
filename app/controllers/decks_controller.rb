@@ -18,6 +18,14 @@ class DecksController < ApplicationController
     end
   end
 
+  def show
+    if /^\d+$/ =~ params[:id]
+      @deck = Deck.find(params[:id])
+    else
+      @deck = Deck.find_by!(:title => params[:id])
+    end
+  end
+
   private
 
   def deck_params

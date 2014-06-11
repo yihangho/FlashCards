@@ -1,0 +1,8 @@
+%h1= @deck.title
+- @show_all = true
+
+- @deck.cards.each do |card|
+  - [:word, :definition, :sentence].each do |sym|
+    = render :partial => "partials/cards/show/#{sym}", :locals => {:card => card, :show => true} unless card.send(sym).empty?
+  - unless card == @deck.cards.last
+    %hr

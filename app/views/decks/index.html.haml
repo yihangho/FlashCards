@@ -2,4 +2,4 @@
 
 %ul
   - @decks.each do |deck|
-    %li= deck.title
+    %li= link_to deck.title, deck
