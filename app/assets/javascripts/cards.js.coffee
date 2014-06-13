@@ -2,13 +2,16 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+$(document).ready ->
+  $(this).trigger("page:load")
+
 $(document).on "page:load", ->
   rate = (id, score) ->
     $.ajax("/cards/rate/#{id}",
       data:
         rating: score
       complete: ->
-        window.location.reload()
+        Turbolinks.visit(document.URL)
       type: "PATCH")
 
   $("#show-hint-btn").click ->
