@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(document).ready ->
+$(document).on "page:load", ->
   rate = (id, score) ->
     $.ajax("/cards/rate/#{id}",
       data:
