@@ -1,4 +1,7 @@
-%h1 Cards
+%div.header-container
+  %span.h1 Card
+  %a.btn.btn-default.pull-right{:href => new_card_path}
+    %i.glyphicon.glyphicon-plus
 
 = render :partial => 'partials/cards/card', :locals => {:card => @card, :show_all => @show_all, :order => @order}
 
