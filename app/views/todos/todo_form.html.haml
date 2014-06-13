@@ -2,7 +2,7 @@
 %h1= @title
 
 = form_for(@todo) do |f|
-  = f.label :word
-  = f.text_field :word
+  .form-group
+    = f.text_field :word, :class => "form-control", :placeholder => "Word"
 
-  = f.submit "Update"
+  = f.submit "Update", :class => "btn btn-default"

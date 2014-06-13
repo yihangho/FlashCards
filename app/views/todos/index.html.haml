@@ -1,4 +1,7 @@
-%h1 TODOS
+.header-container
+  %span.h1 TODOS
+  %a.btn.btn-default.pull-right{:href => new_todo_path}
+    %i.glyphicon.glyphicon-plus
 
 %ul
   - @todos.each do |todo|
