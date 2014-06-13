@@ -4,6 +4,9 @@
 
 - unless @show_all
   %a.btn.btn-primary#show-hint-btn{:href => "#"} Show Hint
-%a.btn.btn-success#thumbs-up-btn{:href => "#", :data => {:card_id => @card.id}} Thumbs Up
-%a.btn.btn-danger#thumbs-down-btn{:href => "#", :data => {:card_id => @card.id}} Thumbs Down
-%a.btn.btn-default.pull-right{:href => edit_card_path(@card)} Edit
+%a.btn.btn-success#thumbs-up-btn{:href => "#", :data => {:card_id => @card.id}}
+  %i.glyphicon.glyphicon-thumbs-up
+%a.btn.btn-danger#thumbs-down-btn{:href => "#", :data => {:card_id => @card.id}}
+  %i.glyphicon.glyphicon-thumbs-down
+%a.btn.btn-default.pull-right{:href => edit_card_path(@card)}
+  %i.glyphicon.glyphicon-edit
