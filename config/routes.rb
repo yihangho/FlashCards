@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :todos, :except => :show
   resources :decks
   get 'random(/:cards(/:style))' => 'cards#random', :as => :random
+  root 'cards#random'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
