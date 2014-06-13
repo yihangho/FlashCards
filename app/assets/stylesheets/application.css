@@ -19,3 +19,7 @@
   margin-top: 10px;
   margin-bottom: 15px;
 }
+
+.header-container a {
+  margin-left: 5px;
+}
