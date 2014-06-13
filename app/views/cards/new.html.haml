@@ -2,12 +2,14 @@
 
 = form_for(@card) do |f|
   - [:word, :word_type, :definition, :synonyms, :antonyms, :sentence].each do |sym|
-    %div
+    %div.form-group
       = f.label sym
-      = f.text_field sym
+      = f.text_field sym, :class => "form-control"
 
-  %div
+  %p.help-block OR
+
+  %div.form-group
     = f.label :yaml_file, "Import YAML"
     = f.file_field :yaml_file
 
-  = f.submit "Save"
+  = f.submit "Save", :class => "btn btn-default"
