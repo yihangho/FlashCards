@@ -28,6 +28,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'haml-rails'
+gem 'spinjs-rails'
 
 group :production do
   gem 'pg'
