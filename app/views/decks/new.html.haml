@@ -1,13 +1,12 @@
 %h1 New Deck
 
 = form_for @deck do |f|
-  = f.label :title
-  = f.text_field :title
+  .form-group
+    = f.label :title
+    = f.text_field :title, :class => "form-control"
 
-  %ul.list-unstyled
-    - @cards.each do |card|
-      %li
-        = check_box_tag("card-#{card.id}")
-        = label_tag("card-#{card.id}", card.word)
+  .form-group
+    = label_tag "Cards"
+    = select_tag :card_ids, options_from_collection_for_select(Card.order(:word).to_a, :id, :word), :multiple => true, :class => "form-control"
 
-  = f.submit "Create"
+  = f.submit "Create", :class => "btn btn-primary"

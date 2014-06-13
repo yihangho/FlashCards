@@ -5,16 +5,14 @@ class DecksController < ApplicationController
 
   def new
     @deck = Deck.new
-    @cards = Card.all
   end
 
   def create
     @deck = Deck.create(deck_params)
     if @deck.save
-      @deck.card_ids |= selected_cards_ids
+      @deck.card_ids = selected_cards_ids
       redirect_to decks_path
     else
-      @cards = Card.all
       render 'new'
     end
   end
@@ -54,12 +52,6 @@ class DecksController < ApplicationController
   end
 
   def selected_cards_ids
-    output = []
-    params.each do |k,_|
-      if /^card-(?<id>\d+)$/ =~ k
-        output << id.to_i
-      end
-    end
-    output
+    params[:card_ids].map { |x| x.to_i }
   end
 end
