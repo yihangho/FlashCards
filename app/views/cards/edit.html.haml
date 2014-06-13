@@ -2,8 +2,8 @@
 
 = form_for(@card) do |f|
   - [:word, :word_type, :definition, :synonyms, :antonyms, :sentence].each do |sym|
-    %div
+    %div.form-group
       = f.label sym
-      = f.text_field sym
+      = f.text_field sym, :class => "form-control"
 
-  = f.submit "Update"
+  = f.submit "Update", :class => "btn btn-default"
