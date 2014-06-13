@@ -1,4 +1,7 @@
-%h1 Cards (#{ @cards.length })
+.header-container
+  %span.h1 Cards
+  %a.btn.btn-default.pull-right{:href => new_card_path}
+    %i.glyphicon.glyphicon-plus
 
 %ul
   - @cards.each do |card|
