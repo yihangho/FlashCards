@@ -5,6 +5,7 @@ class CardsController < ApplicationController
 
   def new
     @card = Card.new
+    render 'card_form'
   end
 
   def create
@@ -27,7 +28,7 @@ class CardsController < ApplicationController
         todo.delete if todo
         render 'show'
       else
-        render 'new'
+        render 'card_form'
       end
     end
   end
@@ -112,6 +113,7 @@ class CardsController < ApplicationController
   def edit
     begin
       @card = Card.find(params[:id])
+      render 'card_form'
     rescue
       redirect_to cards_path
     end
@@ -123,7 +125,7 @@ class CardsController < ApplicationController
       @card.deck_ids = params_deck_ids
       render 'show'
     else
-      render 'edit'
+      render 'card_form'
     end
   end
 
