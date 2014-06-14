@@ -120,6 +120,7 @@ class CardsController < ApplicationController
   def update
     @card = Card.find(params[:id])
     if @card.update_attributes(card_params)
+      @card.deck_ids = params_deck_ids
       render 'show'
     else
       render 'edit'
