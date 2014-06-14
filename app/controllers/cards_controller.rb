@@ -8,17 +8,21 @@ class CardsController < ApplicationController
   end
 
   def create
+    deck_ids = params_deck_ids
+
     if params["card"]["yaml_file"]
       cards = YAML.load(params["card"]["yaml_file"].read)
       cards.each do |card|
         card["word_type"] = card.delete("type")
         sanitize!(card)
-        Card.create(card).save
+        card = Card.create(card)
+        card.deck_ids = deck_ids if card.save
       end
       redirect_to cards_path
     else
       @card = Card.create(card_params)
       if @card.save
+        @card.deck_ids = deck_ids
         todo = Todo.find_by(:word => @card.word)
         todo.delete if todo
         render 'show'
@@ -137,5 +141,27 @@ class CardsController < ApplicationController
         hash.delete(k)
       end
     end
+  end
+
+  def params_deck_ids
+    output = if params["deck_ids"]
+               params["deck_ids"].map { |x| x.to_i }
+             else
+               []
+             end
+
+    unless params["new_decks_titles"].empty?
+      params["new_decks_titles"].strip.split(/\s*,\s*/).each do |title|
+        next if title.empty?
+        begin
+          deck = Deck.find_by!(:title => title)
+          output << deck.id
+        rescue
+          deck = Deck.create(:title => title)
+          output << deck.id if deck.save
+        end
+      end
+    end
+    output.uniq
   end
 end
