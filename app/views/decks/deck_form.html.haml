@@ -1,4 +1,7 @@
-%h1 New Deck
+- if @deck.id
+  %h1 Edit Deck
+- else
+  %h1 New Deck
 
 = form_for @deck do |f|
   .form-group

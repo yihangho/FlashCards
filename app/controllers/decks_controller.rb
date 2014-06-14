@@ -5,6 +5,7 @@ class DecksController < ApplicationController
 
   def new
     @deck = Deck.new
+    render 'deck_form'
   end
 
   def create
@@ -13,7 +14,7 @@ class DecksController < ApplicationController
       @deck.card_ids = selected_cards_ids
       redirect_to decks_path
     else
-      render 'new'
+      render 'deck_form'
     end
   end
 
@@ -27,6 +28,7 @@ class DecksController < ApplicationController
 
   def edit
     @deck = Deck.find(params[:id])
+    render 'deck_form'
   end
 
   def update
@@ -35,7 +37,7 @@ class DecksController < ApplicationController
       @deck.card_ids = selected_cards_ids
       render 'show'
     else
-      render 'edit'
+      render 'deck_form'
     end
   end
 
