@@ -1,15 +1,15 @@
 %div.header-container
   %span.h1 Card
   %a.btn.btn-default.pull-right{:href => new_card_path}
-    %i.glyphicon.glyphicon-plus
+    %i.fa.fa-plus
 
 = render :partial => 'partials/cards/card', :locals => {:card => @card, :show_all => @show_all, :order => @order}
 
 - unless @show_all
   %a.btn.btn-primary#show-hint-btn{:href => "#"} Show Hint
 %a.btn.btn-success#thumbs-up-btn{:href => "#", :data => {:card_id => @card.id}}
-  %i.glyphicon.glyphicon-thumbs-up
+  %i.fa.fa-thumbs-o-up
 %a.btn.btn-danger#thumbs-down-btn{:href => "#", :data => {:card_id => @card.id}}
-  %i.glyphicon.glyphicon-thumbs-down
+  %i.fa.fa-thumbs-o-down
 %a.btn.btn-default.pull-right{:href => edit_card_path(@card)}
-  %i.glyphicon.glyphicon-edit
+  %i.fa.fa-edit
