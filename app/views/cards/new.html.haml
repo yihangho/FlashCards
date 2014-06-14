@@ -16,6 +16,6 @@
   .form-group
     = label_tag "Tags"
     = text_field_tag :new_decks_titles, "", :class => "form-control", :placeholder => "New Deck 1, New Deck 2"
-    = select_tag :deck_ids, options_from_collection_for_select(Deck.order(:title), :id, :title), :multiple => true, :class => "form-control"
+    = select_tag :deck_ids, select_options_arr(Deck.order(:title), @card.deck_ids, :id, :title), :multiple => true, :class => "form-control"
 
   = f.submit "Save", :class => "btn btn-default"
