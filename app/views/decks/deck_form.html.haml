@@ -3,6 +3,11 @@
 - else
   %h1 New Deck
 
+- @deck.errors.full_messages.each do |message|
+  .alert.alert-danger
+    %strong Error!
+    = message
+
 = form_for @deck do |f|
   .form-group
     = f.label :title
