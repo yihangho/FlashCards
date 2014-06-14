@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610130234) do
+ActiveRecord::Schema.define(version: 20140614064422) do
 
   create_table "cards", force: true do |t|
     t.string   "word"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 20140610130234) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "decks", ["title"], name: "index_decks_on_title", unique: true
 
   create_table "todos", force: true do |t|
     t.string   "word"
