@@ -99,6 +99,7 @@ class CardsController < ApplicationController
   end
 
   def rate
+    sleep 15
     card = Card.find_by(:id => params[:id])
     rating = params[:rating].to_i
     card.update_attribute(:rating, card.rating + rating)

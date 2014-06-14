@@ -21,9 +21,17 @@ $(document).on "page:load", ->
     false
 
   $("#thumbs-up-btn").click ->
+    return if $(this).hasClass("disabled")
+    $(this).addClass("disabled")
+           .children("i")
+           .removeClass("fa-thumbs-o-up").addClass("fa-spinner fa-spin")
     rate($(this).data("card-id"), 1)
     false
 
   $("#thumbs-down-btn").click ->
+    return if $(this).hasClass("disabled")
+    $(this).addClass("disabled")
+           .children("i")
+           .removeClass("fa-thumbs-o-down").addClass("fa-spinner fa-spin")
     rate($(this).data("card-id"), -1)
     false
