@@ -10,6 +10,6 @@
 
   .form-group
     = label_tag "Cards"
-    = select_tag :card_ids, select_options_arr(Card.order(:word), @deck.card_ids, :id, :word), :multiple => true, :class => "form-control"
+    = select_tag "deck[card_ids]", select_options_arr(Card.order(:word), @deck.card_ids, :id, :word), :multiple => true, :class => "form-control"
 
   = f.submit "Create", :class => "btn btn-primary"
