@@ -69,12 +69,8 @@ class CardsController < ApplicationController
     choice = (1..cumulative_scores.last).to_a.sample
     index = cumulative_scores.index { |s| choice <= s }
     @card = cards[index]
+    @order = @card.box_order(params[:style].to_sym)
 
-    if ["word", "definition", "sentence"].include?(params[:style])
-      @order = [:word, :definition, :sentence].shuffle
-      @order.delete(params[:style].to_sym)
-      @order.unshift(params[:style].to_sym)
-    end
     render 'show'
   end
 
