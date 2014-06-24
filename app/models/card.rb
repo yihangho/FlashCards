@@ -4,6 +4,7 @@ class Card < ActiveRecord::Base
 
   # condition can be one of the following:
   #
+  # - "All" or "". Returns all Cards.
   # - A positive integer, :id. Map to the ID of a Card. Example, 10.
   # - A negative integer, -:count. Select the newest :count cards. Example, -5
   # - A range, :start-:end. Select cards with IDs in that range. Example, 1-10
@@ -12,8 +13,10 @@ class Card < ActiveRecord::Base
   # - Anything else. First, look for Decks with this name, then look for Cards
   #   with this word.
   # Always return an Array
-  def self.smart_find(condition)
-    case condition.to_s
+  def self.smart_find(condition = nil)
+    case condition.to_s.downcase
+    when "all", ""
+      all.to_a
     when /^(\d+)$/
       [find_by(:id => $1)].delete_if { |x| x.nil? }
     when /^\-(\d+)$/
