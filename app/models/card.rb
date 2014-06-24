@@ -1,6 +1,7 @@
 class Card < ActiveRecord::Base
   has_and_belongs_to_many :decks
   validates :word, :presence => true
+  validates :definition, :presence => true
 
   # condition can be one of the following:
   #
