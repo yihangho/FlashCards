@@ -59,18 +59,16 @@ class CardsController < ApplicationController
 
     max_rating = cards.max_by { |card| card.rating }.rating
 
-    cards = cards.collect do |card|
-      {
-        :card => card,
-        :score => card.weighted_random_order_score(now, max_rating)
-      }
+    scores = cards.map { |c| c.weighted_random_order_score(now, max_rating) }
+    cumulative_scores = [scores.first]
+    scores.inject do |cumulative, score|
+      cumulative_scores << cumulative + score
+      cumulative + score
     end
-    cards.each_index do |i|
-      next if i == 0
-      cards[i][:score] += cards[i-1][:score]
-    end
-    choice = (1..cards.last[:score]).to_a.sample
-    @card = cards.bsearch { |card| card[:score] >= choice }[:card]
+
+    choice = (1..cumulative_scores.last).to_a.sample
+    index = cumulative_scores.index { |s| choice <= s }
+    @card = cards[index]
 
     if ["word", "definition", "sentence"].include?(params[:style])
       @order = [:word, :definition, :sentence].shuffle
