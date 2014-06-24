@@ -107,17 +107,10 @@ class CardsController < ApplicationController
              end
 
     unless params["new_decks_titles"].empty?
-      params["new_decks_titles"].strip.split(/\s*,\s*/).each do |title|
-        next if title.empty?
-        begin
-          deck = Deck.find_by!(:title => title)
-          output << deck.id
-        rescue
-          deck = Deck.create(:title => title)
-          output << deck.id if deck.save
-        end
-      end
+      tokens = params["new_decks_titles"].strip.split(/\s*,\s*/)
+      output |= Deck.find_or_create(*tokens).map { |x| x.id }
     end
+
     output.uniq
   end
 end
