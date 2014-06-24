@@ -82,6 +82,13 @@ class CardsController < ApplicationController
     end
   end
 
+  def import
+  end
+
+  def upload
+    render 'import'
+  end
+
   private
 
   def card_params
