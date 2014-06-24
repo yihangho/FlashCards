@@ -43,4 +43,19 @@ class Card < ActiveRecord::Base
     max_score = Card.order(:rating => :desc).take.rating if max_score.nil?
     ((max_score + 1 - rating) ** 1.5).ceil * hours
   end
+
+  def box_order(first = nil, random = true)
+    order = [:word, :definition, :sentence]
+    order.shuffle! if random
+
+    if order.include?(first)
+      order.delete(first)
+      order.unshift(first)
+    end
+
+    # The word and definition cards are assume to be never empty.
+    order.delete(:sentence) if sentence.empty?
+
+    order
+  end
 end
