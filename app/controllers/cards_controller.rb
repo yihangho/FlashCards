@@ -100,12 +100,7 @@ class CardsController < ApplicationController
       @order.delete(params[:style].to_sym)
       @order.unshift(params[:style].to_sym)
     end
-
-    p request.content_type
-    respond_to do |format|
-      format.html { render 'show' }
-      format.json { render :json => {:order => [:word, :definition, :sentence].shuffle, :card => @card} }
-    end
+    render 'show'
   end
 
   def rate
