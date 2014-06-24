@@ -48,28 +48,10 @@ class CardsController < ApplicationController
   end
 
   def random
-    now = Time.now
+    @card = Card.weighted_sample(params[:cards].to_s)
 
-    tokens = params[:cards].to_s.split(/\s*,\s*/)
-    tokens = [nil] if tokens.length == 0
-
-    cards = tokens.map { |t| Card.smart_find t }
-                  .flatten
-                  .uniq
-
-    max_rating = cards.max_by { |card| card.rating }.rating
-
-    scores = cards.map { |c| c.weighted_random_order_score(now, max_rating) }
-    cumulative_scores = [scores.first]
-    scores.inject do |cumulative, score|
-      cumulative_scores << cumulative + score
-      cumulative + score
-    end
-
-    choice = (1..cumulative_scores.last).to_a.sample
-    index = cumulative_scores.index { |s| choice <= s }
-    @card = cards[index]
-    @order = @card.box_order(params[:style].to_sym)
+    # The intermidiate to_s is to ensure that nil gets converted as well
+    @order = @card.box_order(params[:style].to_s.to_sym)
 
     render 'show'
   end
