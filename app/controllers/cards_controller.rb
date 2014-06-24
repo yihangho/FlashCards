@@ -49,39 +49,16 @@ class CardsController < ApplicationController
 
   def random
     now = Time.now
-    if params[:cards].nil? || params[:cards] == "all"
-      cards = Card.all
-      max_rating = Card.order(:rating => :desc).take.rating
-    else
-      cards = []
-      max_rating = -1e9
-      cards_list = params[:cards].split(',').map { |x| x.strip }
-      cards_list.each do |item|
-        if /^\d*$/ =~ item
-          result = Card.find_by(:id => item.to_i)
-          cards << result if result
-        elsif /^\-(?<count>\d+)$/ =~ item
-          result = Card.last(count.to_i)
-          cards |= result if result.any?
-        elsif /^(?<first>\d+)\-(?<last>\d+)$/ =~ item
-          result = Card.where("id >= #{first.to_i} AND id <= #{last.to_i}")
-          cards |= result if result.any?
-        elsif /^score\s*(?<op>=|\<|\<=|\>|\>=)\s*(?<score>\d+)$/ =~ item
-          result = Card.where("rating #{op} #{score}")
-          cards |= result if result.any?
-        else
-          deck = Deck.find_by(:title => item)
-          if deck
-            result = deck.cards
-            cards |= result if result.any?
-          else
-            result = Card.find_by(:word => item)
-            cards << result if result
-          end
-        end
-      end
-      cards.each { |card| max_rating = card.rating > max_rating ? card.rating : max_rating }
-    end
+
+    tokens = params[:cards].to_s.split(/\s*,\s*/)
+    tokens = [nil] if tokens.length == 0
+
+    cards = tokens.map { |t| Card.smart_find t }
+                  .flatten
+                  .uniq
+
+    max_rating = cards.max_by { |card| card.rating }.rating
+
     cards = cards.collect do |card|
       {
         :card => card,
