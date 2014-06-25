@@ -9,27 +9,14 @@ class CardsController < ApplicationController
   end
 
   def create
-    deck_ids = params_deck_ids
-
-    if params["card"]["yaml_file"]
-      cards = YAML.load(params["card"]["yaml_file"].read)
-      cards.each do |card|
-        card["word_type"] = card.delete("type")
-        sanitize!(card)
-        card = Card.create(card)
-        card.deck_ids = deck_ids if card.save
-      end
-      redirect_to cards_path
+    @card = Card.create(card_params)
+    if @card.save
+      @card.deck_ids = params_deck_ids
+      todo = Todo.find_by(:word => @card.word)
+      todo.delete if todo
+      render 'show'
     else
-      @card = Card.create(card_params)
-      if @card.save
-        @card.deck_ids = deck_ids
-        todo = Todo.find_by(:word => @card.word)
-        todo.delete if todo
-        render 'show'
-      else
-        render 'card_form'
-      end
+      render 'card_form'
     end
   end
 

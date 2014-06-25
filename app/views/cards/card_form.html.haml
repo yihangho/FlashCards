@@ -14,11 +14,4 @@
     = text_field_tag :new_decks_titles, "", :class => "form-control", :placeholder => "New Deck 1, New Deck 2"
     = select_tag :deck_ids, select_options_arr(Deck.order(:title), @card.deck_ids, :id, :title), :multiple => true, :class => "form-control"
 
-  - unless @card.id
-    %p.help-block OR
-
-    .form-group
-      = f.label :yaml_file, "Import YAML"
-      = f.file_field :yaml_file
-
   = f.submit "Save", :class => "btn btn-default"
