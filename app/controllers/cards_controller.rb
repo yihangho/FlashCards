@@ -12,8 +12,7 @@ class CardsController < ApplicationController
     @card = Card.create(card_params)
     if @card.save
       @card.deck_ids = params_deck_ids
-      todo = Todo.find_by(:word => @card.word)
-      todo.delete if todo
+      Todo.delete_if_exists(:word => @card.word)
       render 'show'
     else
       render 'card_form'
