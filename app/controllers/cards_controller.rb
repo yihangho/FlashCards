@@ -86,7 +86,21 @@ class CardsController < ApplicationController
   end
 
   def upload
-    render 'import'
+    unless params[:yaml_file]
+      render 'import'
+      return
+    end
+
+    deck_ids = params_deck_ids
+
+    cards = YAML.load(params[:yaml_file].read)
+    cards.each do |card|
+      card["word_type"] = card.delete("type")
+      sanitize!(card)
+      card = Card.create(card)
+      card.deck_ids = deck_ids if card.save
+    end
+    redirect_to cards_path
   end
 
   private
