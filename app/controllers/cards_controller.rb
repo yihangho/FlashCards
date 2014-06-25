@@ -77,15 +77,14 @@ class CardsController < ApplicationController
       return
     end
 
-    deck_ids = params_deck_ids
-
-    cards = YAML.load(params[:yaml_file].read)
-    cards.each do |card|
-      card["word_type"] = card.delete("type")
-      sanitize!(card)
-      card = Card.create(card)
-      card.deck_ids = deck_ids if card.save
+    cards = YAML.load(params[:yaml_file].read).map do |c|
+      c["word_type"] = c.delete("type")
+      sanitize!(c)
     end
+    created_cards = Card.mass_create(cards, params_deck_ids)
+
+    created_cards.each { |c| Todo.delete_if_exists(c.word) }
+
     redirect_to cards_path
   end
 
