@@ -11,6 +11,30 @@
 </head>
 <body>
   <div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="<%= root_url %>">Flash Cards</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <% [:cards, :decks, :todos].each do |sym| %>
+              <li<% if request.original_url == send("#{sym}_url") %> class="active"<% end %>>
+                <a href="<%= send("#{sym}_url") %>"><%= sym.to_s.capitalize %></a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <%= yield %>
   </div>
 

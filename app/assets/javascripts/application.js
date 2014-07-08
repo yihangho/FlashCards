@@ -13,5 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.spin
+//= require bootstrap/collapse
+//= require bootstrap/transition
 //= require turbolinks
 //= require_tree .
