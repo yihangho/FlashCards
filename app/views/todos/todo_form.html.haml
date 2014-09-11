@@ -5,4 +5,7 @@
   .form-group
     = f.text_field :word, :class => "form-control", :placeholder => "Word"
 
-  = f.submit "Update", :class => "btn btn-default"
+  - if @todo.new_record?
+    = f.submit "Save", :class => "btn btn-default"
+  - else
+    = f.submit "Update", :class => "btn btn-default"
