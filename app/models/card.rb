@@ -66,7 +66,6 @@ class Card < ActiveRecord::Base
     created_cards = []
 
     cards.each do |c|
-      puts "Trying to create #{c["word"]}"
       card = Card.new(c)
       if card.save
         card.deck_ids = deck_ids

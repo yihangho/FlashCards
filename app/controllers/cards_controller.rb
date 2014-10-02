@@ -85,7 +85,10 @@ class CardsController < ApplicationController
     end
     created_cards = Card.mass_create(cards, params_deck_ids)
 
-    created_cards.each { |c| Todo.delete_if_exists(c.word) }
+    created_cards.each do |c|
+      todo = Todo.find_by(:word => c.word)
+      todo.delete if todo
+    end
 
     redirect_to cards_path
   end
