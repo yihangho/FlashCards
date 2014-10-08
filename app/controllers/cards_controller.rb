@@ -95,40 +95,30 @@ class CardsController < ApplicationController
 
   def pronounce
     word = params[:word]
-    api_key = ENV["MARIAM_WEBSTER_API_KEY"]
+    api_key = ENV["CAMBRIDGE_API_KEY"]
 
     if api_key.to_s.empty?
       head :status => :forbidden
       return
     end
 
+    headers = {:accessKey => api_key}
+
     begin
-      response = RestClient.get("http://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{word}?key=#{ENV["MARIAM_WEBSTER_API_KEY"]}")
+      search_response = RestClient.get("https://dictionary.cambridge.org/api/v1/dictionaries/american-english/search?q=#{word}", headers)
+      search_hash = JSON.parse(search_response)
+
+      entry_id = search_hash["results"].first["entryId"]
+
+      pronunciation_response = RestClient.get("https://dictionary.cambridge.org/api/v1/dictionaries/american-english/entries/#{entry_id}/pronunciations/?lang=us&format=ogg", headers)
+      pronunciation_hash = JSON.parse(pronunciation_response)
+
+      render :plain => pronunciation_hash.first["pronunciationUrl"]
+      # render :plain => "http://media.merriam-webster.com/soundc11/s/sacril01.wav"
     rescue
       head :status => :not_found
       return
     end
-
-    xml_response = Nokogiri::XML(response)
-
-    sound_filename = xml_response.css("entry sound wav").first.text
-
-    if sound_filename.empty?
-      head :status => :not_found
-      return
-    end
-
-    if sound_filename.starts_with?("bix")
-      prefix = "bix"
-    elsif sound_filename.starts_with?("gg")
-      prefix = "gg"
-    elsif sound_filename.starts_with?(*("0".."9"))
-      prefix = "number"
-    else
-      prefix = sound_filename[0]
-    end
-
-    render :plain => "http://media.merriam-webster.com/soundc11/#{prefix}/#{sound_filename}"
   end
 
   private
