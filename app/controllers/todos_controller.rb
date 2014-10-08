@@ -46,7 +46,7 @@ class TodosController < ApplicationController
     todo = Todo.find_by(:id => params[:id])
     if todo
       @card = Card.new(:word => todo.word)
-      render 'cards/new'
+      render 'cards/card_form'
     else
       redirect_to todos_path
     end

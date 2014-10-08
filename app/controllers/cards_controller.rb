@@ -38,7 +38,7 @@ class CardsController < ApplicationController
   def random
     @card = Card.weighted_sample(params[:cards].to_s)
 
-    # The intermidiate to_s is to ensure that nil gets converted as well
+    # The intermediate to_s is to ensure that nil gets converted as well
     @order = @card.box_order(params[:style].to_s.to_sym)
 
     render 'show'
