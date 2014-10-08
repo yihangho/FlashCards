@@ -111,7 +111,7 @@ class CardsController < ApplicationController
 
     xml_response = Nokogiri::XML(response)
 
-    sound_filename = xml_response.css("wav").text
+    sound_filename = xml_response.css("entry sound wav").first.text
 
     if sound_filename.empty?
       head :status => :not_found
