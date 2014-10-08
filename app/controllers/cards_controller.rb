@@ -110,7 +110,7 @@ class CardsController < ApplicationController
 
       entry_id = search_hash["results"].first["entryId"]
 
-      pronunciation_response = RestClient.get("https://dictionary.cambridge.org/api/v1/dictionaries/american-english/entries/#{entry_id}/pronunciations/?lang=us&format=ogg", headers)
+      pronunciation_response = RestClient.get("https://dictionary.cambridge.org/api/v1/dictionaries/american-english/entries/#{entry_id}/pronunciations/?lang=us&format=mp3", headers)
       pronunciation_hash = JSON.parse(pronunciation_response)
 
       render :plain => pronunciation_hash.first["pronunciationUrl"]
