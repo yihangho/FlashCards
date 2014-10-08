@@ -30,6 +30,7 @@ gem 'spring',        group: :development
 
 gem 'haml-rails'
 gem 'spinjs-rails'
+gem 'rest-client'
 
 group :production do
   gem 'pg'
