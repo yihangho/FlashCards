@@ -52,7 +52,7 @@ $(document).on "page:load", ->
         pronunciationPlayer = new Audio(path)
         pronunciationPlayer.play()
 
-        pronunciationPlayer.addEventListener "playing", =>
+        pronunciationPlayer.addEventListener "loadeddata", =>
           $(this).children("i").addClass("fa-volume-up").removeClass("fa-spinner fa-spin disabled")
 
         pronunciationPlayer.addEventListener "error", =>
