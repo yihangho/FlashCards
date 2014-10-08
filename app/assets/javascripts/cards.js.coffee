@@ -40,7 +40,7 @@ $(document).on "page:load", ->
 
   $("[data-pronounce]").click ->
     if pronunciationPlayer
-      pronunciationPlayer.currentTime = 0
+      pronunciationPlayer.load()
       pronunciationPlayer.play()
       return false
 
