@@ -93,6 +93,44 @@ class CardsController < ApplicationController
     redirect_to cards_path
   end
 
+  def pronounce
+    word = params[:word]
+    api_key = ENV["MARIAM_WEBSTER_API_KEY"]
+
+    if api_key.to_s.empty?
+      head :status => :forbidden
+      return
+    end
+
+    begin
+      response = RestClient.get("http://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{word}?key=#{ENV["MARIAM_WEBSTER_API_KEY"]}")
+    rescue
+      head :status => :not_found
+      return
+    end
+
+    xml_response = Nokogiri::XML(response)
+
+    sound_filename = xml_response.css("wav").text
+
+    if sound_filename.empty?
+      head :status => :not_found
+      return
+    end
+
+    if sound_filename.starts_with?("bix")
+      prefix = "bix"
+    elsif sound_filename.starts_with?("gg")
+      prefix = "gg"
+    elsif sound_filename.starts_with?(*("0".."9"))
+      prefix = "number"
+    else
+      prefix = sound_filename[0]
+    end
+
+    render :plain => "http://media.merriam-webster.com/soundc11/#{prefix}/#{sound_filename}"
+  end
+
   private
 
   def card_params

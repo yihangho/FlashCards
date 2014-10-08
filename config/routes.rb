@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'cards/import' => 'cards#import', :as => :import_cards
   post 'cards/import' => 'cards#upload'
   patch 'cards/rate/:id' => 'cards#rate'
+  get 'pronounce/:word' => 'cards#pronounce'
   get 'todos/:id/new_card' => 'todos#new_card', :as => :new_card_from_todo
   resources :cards, :except => :destroy
   resources :todos, :except => :show

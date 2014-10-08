@@ -1,4 +1,8 @@
 - html_classes = ["well", "card"]
 - html_classes << "hidden" unless show
 
-%div{:class => html_classes} #{card.word} (<i>#{card.word_type}</i>)
+%div{:class => html_classes}
+  #{card.word} (<i>#{card.word_type}</i>)
+  - unless ENV["MARIAM_WEBSTER_API_KEY"].to_s.empty?
+    %a.pull-right{:href => '#', :data => {:pronounce => card.word}}
+      %i.fa.fa-volume-up

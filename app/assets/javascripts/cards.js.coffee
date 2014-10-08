@@ -6,6 +6,8 @@ $(document).ready ->
   $(this).trigger("page:load")
 
 $(document).on "page:load", ->
+  pronunciationPlayer = null
+
   rate = (id, score) ->
     $.ajax("/cards/rate/#{id}",
       data:
@@ -34,4 +36,29 @@ $(document).on "page:load", ->
            .children("i")
            .removeClass("fa-thumbs-o-down").addClass("fa-spinner fa-spin")
     rate($(this).data("card-id"), -1)
+    false
+
+  $("[data-pronounce]").click ->
+    if pronunciationPlayer
+      pronunciationPlayer.play()
+      return false
+
+    $(this).children("i").removeClass("fa-volume-up").addClass("fa-spinner fa-spin disabled")
+
+    word = $(this).data("pronounce")
+    $.ajax "/pronounce/#{word}",
+      type: "GET"
+      success: (path) =>
+        pronunciationPlayer = new Audio(path)
+        pronunciationPlayer.play()
+
+        pronunciationPlayer.addEventListener "playing", =>
+          $(this).children("i").addClass("fa-volume-up").removeClass("fa-spinner fa-spin disabled")
+
+        pronunciationPlayer.addEventListener "error", =>
+          $(this).children("i").addClass("fa-volume-up text-danger").removeClass("fa-spinner fa-spin disabled")
+          pronunciationPlayer = null
+      error: =>
+        $(this).children("i").addClass("fa-volume-up text-danger").removeClass("fa-spinner fa-spin disabled")
+
     false
