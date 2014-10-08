@@ -31,6 +31,7 @@ gem 'spring',        group: :development
 gem 'haml-rails'
 gem 'spinjs-rails'
 gem 'rest-client'
+gem 'nokogiri'
 
 group :production do
   gem 'pg'
