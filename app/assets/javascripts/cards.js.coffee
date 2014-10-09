@@ -6,7 +6,7 @@ $(document).ready ->
   $(this).trigger("page:load")
 
 $(document).on "page:load", ->
-  pronunciationPlayer = null
+  pronunciationPlayers = {}
 
   rate = (id, score) ->
     $.ajax("/cards/rate/#{id}",
@@ -39,26 +39,27 @@ $(document).on "page:load", ->
     false
 
   $("[data-pronounce]").click ->
-    if pronunciationPlayer
-      pronunciationPlayer.load()
-      pronunciationPlayer.play()
+    word = $(this).data("pronounce")
+
+    if pronunciationPlayers.hasOwnProperty(word)
+      pronunciationPlayers[word].load()
+      pronunciationPlayers[word].play()
       return false
 
     $(this).children("i").removeClass("fa-volume-up").addClass("fa-spinner fa-spin disabled")
 
-    word = $(this).data("pronounce")
     $.ajax "/pronounce/#{word}",
       type: "GET"
       success: (path) =>
-        pronunciationPlayer = new Audio(path)
-        pronunciationPlayer.play()
+        pronunciationPlayers[word] = new Audio(path)
+        pronunciationPlayers[word].play()
 
-        pronunciationPlayer.addEventListener "loadeddata", =>
+        pronunciationPlayers[word].addEventListener "loadeddata", =>
           $(this).children("i").addClass("fa-volume-up").removeClass("fa-spinner fa-spin disabled")
 
-        pronunciationPlayer.addEventListener "error", =>
+        pronunciationPlayers[word].addEventListener "error", =>
           $(this).children("i").addClass("fa-volume-up text-danger").removeClass("fa-spinner fa-spin disabled")
-          pronunciationPlayer = null
+          delete pronunciationPlayers[word]
       error: =>
         $(this).children("i").addClass("fa-volume-up text-danger").removeClass("fa-spinner fa-spin disabled")
 
