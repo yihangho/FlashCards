@@ -99,4 +99,20 @@ class Card < ActiveRecord::Base
 
     order
   end
+
+  def elastic_search_index
+    path = ENV["ELASTIC_SEARCH_PATH"].to_s
+    index = ENV["ELASTIC_SEARCH_INDEX"].to_s
+    return if path.empty? || index.empty?
+
+    attributes = [:word, :definition, :synonyms, :antonyms, :sentence]
+    json = to_json(*attributes)
+
+    RestClient.put "#{path}/#{index}/card/#{id}", json
+  end
+
+  def to_json(*attrs)
+    attrs = attribute_names if attrs.empty?
+    Hash[attrs.map { |attr| [attr, send(attr)]}].to_json
+  end
 end
