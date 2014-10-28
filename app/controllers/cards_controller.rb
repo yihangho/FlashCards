@@ -121,6 +121,17 @@ class CardsController < ApplicationController
     end
   end
 
+  def search
+    cards = Card.search(params[:query])
+
+    # This is a seriously ugly hack, should refactor.
+    @deck = Object.new
+    @deck.define_singleton_method(:title, Proc.new { "Search Result" })
+    @deck.define_singleton_method(:cards, Proc.new { cards })
+
+    render 'decks/show'
+  end
+
   private
 
   def card_params
