@@ -1,9 +1,10 @@
 class Card < ActiveRecord::Base
+  include ElasticSearch
+  elastic_search_attributes :word, :definition, :synonyms, :antonyms, :sentence
+
   has_and_belongs_to_many :decks
   validates :word, :presence => true
   validates :definition, :presence => true
-
-  after_save { elastic_search_index }
 
   # condition can be one of the following:
   #
@@ -78,27 +79,6 @@ class Card < ActiveRecord::Base
     created_cards
   end
 
-  def self.search(query)
-    path = ENV["ELASTIC_SEARCH_PATH"].to_s
-    index = ENV["ELASTIC_SEARCH_INDEX"].to_s
-    return [] if path.empty? || index.empty?
-
-    payload = {
-      :fields => [],
-      :query => {
-        :query_string => {
-          :query => query
-        }
-      }
-    }.to_json
-
-    result = JSON.parse(RestClient.post "#{path}/#{index}/card/_search", payload)
-
-    ids = result["hits"]["hits"].map { |h| h["_id"].to_i }
-
-    Card.find(ids).sort { |a, b| ids.index(a.id) <=> ids.index(b.id) }
-  end
-
   # weighted_random_order_score is the relative likelihood of any instance being
   # picked. Essentially, it is the product of hours since last revised * difference in rating between itself and the best performed card.
   # The probability of this card being chosen is score/total score.
@@ -121,21 +101,5 @@ class Card < ActiveRecord::Base
     order.delete(:sentence) if sentence.empty?
 
     order
-  end
-
-  def elastic_search_index
-    path = ENV["ELASTIC_SEARCH_PATH"].to_s
-    index = ENV["ELASTIC_SEARCH_INDEX"].to_s
-    return if path.empty? || index.empty?
-
-    attributes = [:word, :definition, :synonyms, :antonyms, :sentence]
-    json = to_json(*attributes)
-
-    RestClient.put "#{path}/#{index}/card/#{id}", json
-  end
-
-  def to_json(*attrs)
-    attrs = attribute_names if attrs.empty?
-    Hash[attrs.map { |attr| [attr, send(attr)]}].to_json
   end
 end
