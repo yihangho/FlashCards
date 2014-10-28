@@ -3,6 +3,8 @@ class Card < ActiveRecord::Base
   validates :word, :presence => true
   validates :definition, :presence => true
 
+  after_save { elastic_search_index }
+
   # condition can be one of the following:
   #
   # - "All" or "". Returns all Cards.
