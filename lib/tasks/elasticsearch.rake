@@ -4,7 +4,10 @@ namespace :elasticsearch do
     index = ENV["ELASTIC_SEARCH_INDEX"].to_s
     return if path.empty? || index.empty?
 
-    RestClient.delete "#{path}/#{index}"
+    begin
+      RestClient.delete "#{path}/#{index}"
+    rescue
+    end
 
     attributes = [:word, :definition, :synonyms, :antonyms, :sentence]
 
