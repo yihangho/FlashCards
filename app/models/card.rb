@@ -76,6 +76,27 @@ class Card < ActiveRecord::Base
     created_cards
   end
 
+  def self.search(query)
+    path = ENV["ELASTIC_SEARCH_PATH"].to_s
+    index = ENV["ELASTIC_SEARCH_INDEX"].to_s
+    return [] if path.empty? || index.empty?
+
+    payload = {
+      :fields => [],
+      :query => {
+        :query_string => {
+          :query => query
+        }
+      }
+    }.to_json
+
+    result = JSON.parse(RestClient.post "#{path}/#{index}/card/_search", payload)
+
+    ids = result["hits"]["hits"].map { |h| h["_id"].to_i }
+
+    Card.find(ids).sort { |a, b| ids.index(a.id) <=> ids.index(b.id) }
+  end
+
   # weighted_random_order_score is the relative likelihood of any instance being
   # picked. Essentially, it is the product of hours since last revised * difference in rating between itself and the best performed card.
   # The probability of this card being chosen is score/total score.
