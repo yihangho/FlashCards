@@ -94,13 +94,12 @@ class CardsController < ApplicationController
   end
 
   def pronounce
-    pronunciation = Dictionaries::Cambridge.new(params[:word]).pronunciation
-
-    if pronunciation
-      render :plain => pronunciation
-    else
-      head :status => :not_found
+    Dictionaries.dictionaries.each do |dictionary|
+      pronunciation = dictionary.new(params[:word]).pronunciation
+      return render :plain => pronunciation if pronunciation
     end
+
+    head :status => :not_found
   end
 
   def search

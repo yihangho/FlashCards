@@ -3,6 +3,6 @@
 
 %div{:class => html_classes}
   #{card.word} (<i>#{card.word_type}</i>)
-  - unless ENV["CAMBRIDGE_API_KEY"].to_s.empty?
+  - unless Dictionaries.dictionaries.empty?
     %a.pull-right{:href => '#', :data => {:pronounce => card.word}}
       %i.fa.fa-volume-up
