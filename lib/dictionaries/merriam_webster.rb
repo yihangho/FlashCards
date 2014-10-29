@@ -3,7 +3,15 @@ module Dictionaries
     API_KEY = ENV["MERRIAM_WEBSTER_API_KEY"]
 
     def initialize(word)
-      http_response = RestClient.get "http://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{word}?key=#{API_KEY}"
+      @word = word
+
+      http_response = Redis.current.get("dictionary.merriamwebster.#{@word}") if Redis.current.connected?
+
+      unless http_response
+        http_response = RestClient.get "http://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{word}?key=#{API_KEY}"
+        Redis.current.set("dictionary.merriamwebster.#{@word}", http_response) if Redis.current.connected?
+      end
+
       @details = Nokogiri::XML(http_response)
     rescue
       @details = nil
