@@ -32,12 +32,14 @@
             <% end %>
           </ul>
 
-          <form class="navbar-form navbar-right" role="search" action="<%= search_path %>" method="get">
-            <div class="form-group">
-              <input type="search" class="form-control" placeholder="Search" name="query">
-            </div>
-            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-          </form>
+          <% if ElasticSearch.search_enabled? %>
+            <form class="navbar-form navbar-right" role="search" action="<%= search_path %>" method="get">
+              <div class="form-group">
+                <input type="search" class="form-control" placeholder="Search" name="query">
+              </div>
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </form>
+          <% end %>
         </div>
 
 
