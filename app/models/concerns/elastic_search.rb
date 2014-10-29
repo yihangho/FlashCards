@@ -5,12 +5,12 @@ module ElasticSearch
     after_save { elastic_search_index }
   end
 
-  def self.search_enabled
+  def self.search_enabled?
     !ENV["ELASTIC_SEARCH_PATH"].to_s.empty? && ! ENV["ELASTIC_SEARCH_INDEX"].to_s.empty?
   end
 
   def elastic_search_index
-    return unless ElasticSearch.search_enabled
+    return unless ElasticSearch.search_enabled?
 
     json = Hash[self.class.elastic_search_attributes.map { |attr| [attr, send(attr)]}].to_json
 
@@ -19,7 +19,7 @@ module ElasticSearch
 
   module ClassMethods
     def search(query)
-      return [] unless ElasticSearch.search_enabled
+      return [] unless ElasticSearch.search_enabled?
 
       payload = {
         :fields => [],
@@ -51,7 +51,7 @@ module ElasticSearch
     end
 
     def elastic_search_reindex_all
-      return [] unless ElasticSearch.search_enabled
+      return [] unless ElasticSearch.search_enabled?
 
       begin
         RestClient.delete elastic_search_url
