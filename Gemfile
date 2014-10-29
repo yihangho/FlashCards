@@ -32,6 +32,7 @@ gem 'haml-rails'
 gem 'spinjs-rails'
 gem 'rest-client'
 gem 'nokogiri'
+gem 'redis'
 
 group :production do
   gem 'pg'
