@@ -94,30 +94,12 @@ class CardsController < ApplicationController
   end
 
   def pronounce
-    word = params[:word]
-    api_key = ENV["CAMBRIDGE_API_KEY"]
+    pronunciation = Dictionaries::Cambridge.new(params[:word]).pronunciation
 
-    if api_key.to_s.empty?
-      head :status => :forbidden
-      return
-    end
-
-    headers = {:accessKey => api_key}
-
-    begin
-      search_response = RestClient.get("https://dictionary.cambridge.org/api/v1/dictionaries/american-english/search?q=#{word}", headers)
-      search_hash = JSON.parse(search_response)
-
-      entry_id = search_hash["results"].first["entryId"]
-
-      pronunciation_response = RestClient.get("https://dictionary.cambridge.org/api/v1/dictionaries/american-english/entries/#{entry_id}/pronunciations/?lang=us&format=mp3", headers)
-      pronunciation_hash = JSON.parse(pronunciation_response)
-
-      render :plain => pronunciation_hash.first["pronunciationUrl"]
-      # render :plain => "http://media.merriam-webster.com/soundc11/s/sacril01.wav"
-    rescue
+    if pronunciation
+      render :plain => pronunciation
+    else
       head :status => :not_found
-      return
     end
   end
 
