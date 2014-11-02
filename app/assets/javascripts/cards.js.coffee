@@ -5,6 +5,24 @@
 $(document).ready ->
   $(this).trigger("page:load")
 
+  if annyang?
+    commands =
+      "correct": ->
+        $("#thumbs-up-btn").click()
+      "wrong": ->
+        $("#thumbs-down-btn").click()
+      "more": ->
+        $("#show-hint-btn").click()
+      "next": ->
+        Turbolinks.visit(document.URL)
+      "read the word": ->
+        $("[data-pronounce]").click() if $("[data-pronounce]").length == 1
+      "search *query": (query) ->
+        Turbolinks.visit("/cards/search?query=#{query}")
+
+    annyang.addCommands(commands)
+    annyang.start()
+
 $(document).on "page:load", ->
   pronunciationPlayers = {}
 
