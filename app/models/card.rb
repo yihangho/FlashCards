@@ -26,7 +26,7 @@ class Card < ActiveRecord::Base
     when /^\-(\d+)$/
       last($1)
     when /^(\d+)\-(\d+)$/
-      where("id >= #{$1} AND id <= #{$2}").to_a
+      where("'id' >= ? AND 'id' <= ?", $1, $2).to_a
     when /^score\s*(=|\<|\<=|\>|\>=)\s*(\d+)$/
       where("rating #{$1} #{$2}").to_a
     else
@@ -48,6 +48,10 @@ class Card < ActiveRecord::Base
     cards = tokens.map { |t| Card.smart_find(t) }
                   .flatten
                   .uniq
+
+    if cards.length > 1
+      cards = cards.sort { |a, b| a.updated_at <=> b.updated_at }[0..-2]
+    end
 
     max_rating = cards.max_by { |card| card.rating }.rating
 
