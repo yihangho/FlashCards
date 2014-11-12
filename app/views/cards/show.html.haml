@@ -5,10 +5,35 @@
 
 = render :partial => 'partials/cards/card', :locals => {:card => @card, :show_all => @show_all, :order => @order}
 
-%a.btn.btn-success#thumbs-up-btn{:href => "#", :data => {:card_id => @card.id}}
-  %i.fa.fa-thumbs-o-up
+.thumbs-container
+  %span
+    %a.btn.btn-success#thumbs-up-btn{:href => "#", :data => {:card_id => @card.id}}
+      %i.fa.fa-thumbs-o-up
 
-%a.btn.btn-primary#show-hint-btn{:href => "#", :class => ("disabled" if @show_all)} Show Hint
+    %a.btn.btn-primary#show-hint-btn{:href => "#", :class => ("disabled" if @show_all)} Show Hint
 
-%a.btn.btn-danger#thumbs-down-btn{:href => "#", :data => {:card_id => @card.id}}
-  %i.fa.fa-thumbs-o-down
+    %a.btn.btn-danger#thumbs-down-btn{:href => "#", :data => {:card_id => @card.id}}
+      %i.fa.fa-thumbs-o-down
+
+:css
+  @media (max-width: 768px) {
+    html {
+      position: relative;
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0 0 38px;
+    }
+
+    .thumbs-container {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 38px;
+      width: 100%;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      text-align: center;
+    }
+  }
