@@ -15,6 +15,7 @@
 //= require spin
 //= require jquery.spin
 //= require bootstrap/collapse
+//= require bootstrap/dropdown
 //= require bootstrap/transition
 //= require annyang
 //= require turbolinks

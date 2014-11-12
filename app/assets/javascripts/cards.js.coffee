@@ -37,7 +37,7 @@ $(document).on "page:load", ->
   $("#show-hint-btn").click ->
     if $(".card.hidden").length
       $($(".hidden.card")[0]).removeClass("hidden")
-      $(this).addClass("hidden") unless $(".hidden.card").length
+      $(this).addClass("disabled") unless $(".hidden.card").length
     false
 
   $("#thumbs-up-btn").click ->
