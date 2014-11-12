@@ -1,3 +1,5 @@
+= stylesheet_link_tag 'cards/show', media: 'all'
+
 %div.header-container
   %span.h1 Card
   %a.btn.btn-default.pull-right{:href => edit_card_path(@card), :title => "Edit"}
@@ -14,26 +16,3 @@
 
     %a.btn.btn-danger#thumbs-down-btn{:href => "#", :data => {:card_id => @card.id}}
       %i.fa.fa-thumbs-o-down
-
-:css
-  @media (max-width: 768px) {
-    html {
-      position: relative;
-      min-height: 100%;
-    }
-
-    body {
-      margin: 0 0 38px;
-    }
-
-    .thumbs-container {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      height: 38px;
-      width: 100%;
-      padding-top: 2px;
-      padding-bottom: 2px;
-      text-align: center;
-    }
-  }
