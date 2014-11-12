@@ -35,9 +35,12 @@ $(document).on "page:load", ->
       type: "PATCH")
 
   $("#show-hint-btn").click ->
-    if $(".card.hidden").length
-      $($(".hidden.card")[0]).removeClass("hidden")
+    if $(".hidden.card").length
+      $(".hidden.card").eq(0).removeClass("hidden")
+
       $(this).addClass("disabled") unless $(".hidden.card").length
+
+      $("html, body").animate(scrollTop: $(document).height(), "slow")
     false
 
   $("#thumbs-up-btn").click ->
