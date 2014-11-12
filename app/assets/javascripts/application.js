@@ -17,6 +17,5 @@
 //= require bootstrap/collapse
 //= require bootstrap/dropdown
 //= require bootstrap/transition
-//= require annyang
 //= require turbolinks
 //= require_tree .

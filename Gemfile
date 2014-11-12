@@ -33,7 +33,6 @@ gem 'spinjs-rails'
 gem 'rest-client'
 gem 'nokogiri'
 gem 'redis'
-gem 'annyang-rails'
 
 group :production do
   gem 'pg'
