@@ -83,14 +83,15 @@ class CardsController < ApplicationController
       c["word_type"] = c.delete("type")
       sanitize!(c)
     end
-    created_cards = Card.mass_create(cards, params_deck_ids)
 
-    created_cards.each do |c|
+    @cards = Card.mass_create(cards, params_deck_ids)
+
+    @cards.each do |c|
       todo = Todo.find_by(:word => c.word)
       todo.delete if todo
     end
 
-    redirect_to cards_path
+    render "decks/show"
   end
 
   def pronounce

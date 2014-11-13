@@ -1,16 +1,17 @@
-.header-container
-  %span.h1= @deck.title
+- if @deck
+  .header-container
+    %span.h1= @deck.title
 
-  - if @deck.respond_to?(:id)
-    %a.btn.btn-danger.pull-right{:href => deck_path(@deck), :data => {:method => :delete, :confirm => "Are you sure?"}}
-      %i.fa.fa-trash-o
-    %a.btn.btn-default.pull-right{:href => edit_deck_path(@deck)}
-      %i.fa.fa-edit
-    %a.btn.btn-primary.pull-right{:href => random_path(@deck.title)}
-      %i.fa.fa-random
+    - if @deck.respond_to?(:id)
+      %a.btn.btn-danger.pull-right{:href => deck_path(@deck), :data => {:method => :delete, :confirm => "Are you sure?"}}
+        %i.fa.fa-trash-o
+      %a.btn.btn-default.pull-right{:href => edit_deck_path(@deck)}
+        %i.fa.fa-edit
+      %a.btn.btn-primary.pull-right{:href => random_path(@deck.title)}
+        %i.fa.fa-random
 
 - order = [:word, :definition, :sentence]
-- @deck.cards.each do |card|
+- (@deck ? @deck.cards : @cards).each do |card|
   = render :partial => "partials/cards/card", :locals => {:card => card, :show_all => true, :order => order}
-  - unless card == @deck.cards.last
+  - unless card == (@deck ? @deck.cards : @cards).last
     %hr
