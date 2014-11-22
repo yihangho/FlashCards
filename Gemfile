@@ -33,6 +33,7 @@ gem 'spinjs-rails'
 gem 'rest-client'
 gem 'nokogiri'
 gem 'redis'
+gem 'react-rails', '~> 0.12.0.0'
 
 group :production do
   gem 'pg'

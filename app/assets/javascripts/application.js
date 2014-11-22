@@ -17,5 +17,6 @@
 //= require bootstrap/collapse
 //= require bootstrap/dropdown
 //= require bootstrap/transition
+//= require react
 //= require turbolinks
 //= require_tree .
