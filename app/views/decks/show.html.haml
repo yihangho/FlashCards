@@ -12,6 +12,6 @@
 
 - order = [:word, :definition, :sentence]
 - (@deck ? @deck.cards : @cards).each do |card|
-  = render :partial => "partials/cards/card", :locals => {:card => card, :show_all => true, :order => order}
+  = render :partial => "partials/cards/card", :locals => {:card => card, :show_all => true, :order => order.clone}
   - unless card == (@deck ? @deck.cards : @cards).last
     %hr
