@@ -47,6 +47,7 @@
           definition={this.state.card.definition}
           synonyms={this.state.card.synonyms}
           antonyms={this.state.card.antonyms}
+          words={JSON.parse(this.props.words)}
           show={description.visible}
           key={description.type + "-" + i}
         />);
@@ -154,8 +155,18 @@
           <ul key={"ul-" + k}>
           {
             this.props[k].map(function(word, i) {
-              return (<li key={ i }>{ word }</li>);
-            })
+              var children = word;
+              if (this.props.words.bsearch(word)) {
+                children = (
+                  <a href={"/cards/" + word}>{ word }</a>
+                );
+              }
+              return (
+                <li key={ i }>
+                  { children }
+                </li>
+              );
+            }, this)
           }
           </ul>
         ];
@@ -183,7 +194,7 @@
     var container = document.getElementById("ReactCardContainer");
     if (container) {
       React.render(
-        <CardsContainer card={container.dataset.card} />,
+        <CardsContainer card={container.dataset.card} words={container.dataset.words} />,
         container
       );
     }

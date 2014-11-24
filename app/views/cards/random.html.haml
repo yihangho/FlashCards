@@ -1,4 +1,4 @@
 = stylesheet_link_tag 'cards/random', media: 'all'
 %h1 Card
 
-%div#ReactCardContainer{data: {card: @card.to_json}}
+%div#ReactCardContainer{data: {card: @card.to_json, words: Card.order(:word).pluck(:word).to_json}}
