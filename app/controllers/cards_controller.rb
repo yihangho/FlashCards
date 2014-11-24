@@ -40,8 +40,6 @@ class CardsController < ApplicationController
 
     # The intermediate to_s is to ensure that nil gets converted as well
     @order = @card.box_order(params[:style].to_s.to_sym)
-
-    render 'show'
   end
 
   def rate
