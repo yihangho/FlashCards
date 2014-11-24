@@ -105,6 +105,9 @@
       }
       this.setState(state);
     },
+    componentDidUpdate: function() {
+      $("html, body").animate({scrollTop: $(document).height()}, "slow");
+    },
     render: function() {
       var moreCards = !this.state.order.every(function(x) {
         return x.visible;
