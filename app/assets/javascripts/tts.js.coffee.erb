@@ -1,0 +1,41 @@
+cache = {}
+
+addEventListenerOnce = (target, type, listener) ->
+  fn = ->
+    listener?()
+    target.removeEventListener(type, fn)
+
+  target.addEventListener(type, fn)
+
+window.TTS = (word, end, err) ->
+  if "speechSynthesis" of window
+    utterance = new SpeechSynthesisUtterance(word)
+
+    addEventListenerOnce(utterance, "end", end)
+
+    speechSynthesis.speak(utterance)
+  else
+    if cache.hasOwnProperty(word)
+      player = cache[word]
+
+      addEventListenerOnce(player, "ended", end)
+      addEventListenerOnce(player, "error", err)
+
+      cache[word].load()
+      cache[word].play()
+    else
+      $.ajax "/pronounce/#{word}",
+        type: "GET"
+        success: (path) ->
+          player = cache[word] = new Audio(path)
+          player.play()
+
+          addEventListenerOnce(player, "ended", end)
+          addEventListenerOnce player, "error", ->
+            err?()
+            delete cache[word]
+        error: err
+  false
+
+Object.defineProperty window.TTS, "enabled",
+  value: <%= !Dictionaries.dictionaries.empty? %> || "speechSynthesis" of window

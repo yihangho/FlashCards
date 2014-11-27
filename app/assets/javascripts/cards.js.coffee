@@ -44,31 +44,8 @@ $(document).on "page:load", ->
   $("[data-pronounce]").click ->
     word = $(this).data("pronounce")
     $(this).children("i").removeClass("fa-volume-up").addClass("fa-spinner fa-spin disabled")
-
-    if "speechSynthesis" of window
-      utterance = new SpeechSynthesisUtterance(word)
-
-      utterance.addEventListener "end", =>
-        $(this).children("i").addClass("fa-volume-up").removeClass("fa-spinner fa-spin disabled")
-
-      speechSynthesis.speak(utterance)
-    else
-      if pronunciationPlayers.hasOwnProperty(word)
-        pronunciationPlayers[word].load()
-        pronunciationPlayers[word].play()
-      else
-        $.ajax "/pronounce/#{word}",
-          type: "GET"
-          success: (path) =>
-            pronunciationPlayers[word] = new Audio(path)
-            pronunciationPlayers[word].play()
-
-            pronunciationPlayers[word].addEventListener "ended", =>
-              $(this).children("i").addClass("fa-volume-up").removeClass("fa-spinner fa-spin disabled")
-
-            pronunciationPlayers[word].addEventListener "error", =>
-              $(this).children("i").addClass("fa-volume-up text-danger").removeClass("fa-spinner fa-spin disabled")
-              delete pronunciationPlayers[word]
-          error: =>
-            $(this).children("i").addClass("fa-volume-up text-danger").removeClass("fa-spinner fa-spin disabled")
+    TTS word, =>
+      $(this).children("i").addClass("fa-volume-up").removeClass("fa-spinner fa-spin disabled")
+    , =>
+      $(this).children("i").addClass("fa-volume-up text-danger").removeClass("fa-spinner fa-spin disabled")
     false

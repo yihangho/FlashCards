@@ -147,37 +147,12 @@
   var Pronunciator = React.createClass({
     readWord: function(e) {
       e.preventDefault();
-
-      if ("speechSynthesis" in window) {
-        utterance = new SpeechSynthesisUtterance(this.props.word);
-
-        utterance.addEventListener("end", function() {
-          this.setState({reading: false});
-        }.bind(this));
-
-        this.setState({reading: true});
-        speechSynthesis.speak(utterance);
-      } else {
-        this.setState({reading: true});
-        $.ajax("/pronounce/" + this.props.word, {
-          type: "GET",
-          success: function(path) {
-            var player = new Audio(path);
-            player.play();
-
-            player.addEventListener("ended", function() {
-              this.setState({reading: false});
-            }.bind(this));
-
-            player.addEventListener("error", function() {
-              this.setState({error: true});
-            }.bind(this));
-          }.bind(this),
-          error: function() {
-            this.setState({error: true});
-          }.bind(this)
-        });
-      }
+      this.setState({reading: true});
+      TTS(this.props.word, function() {
+        this.setState({reading: false});
+      }.bind(this), function() {
+        this.setState({error: true});
+      }.bind(this));
     },
     getInitialState: function() {
       return {
@@ -186,7 +161,7 @@
       }
     },
     render: function() {
-      if (<%= !Dictionaries.dictionaries.empty? %> || "speechSynthesis" in window) {
+      if (TTS.enabled) {
         var icons = "fa";
         if (this.state.error) {
           icons += " fa-volume-up text-danger";
