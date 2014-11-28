@@ -1,0 +1,2 @@
+- [:word, :definition, :sentence].reject { |sym| card.send(sym).empty? }.each do |sym|
+  = render partial: "cards/#{sym}", object: card, as: :card

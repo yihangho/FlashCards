@@ -1,7 +1,4 @@
-- html_classes = ["well", "card"]
-- html_classes << "hidden" unless show
-
-%div{:class => html_classes}
+%div{:class => "well card"}
   = card.definition
 
   - unless card.synonyms.empty?

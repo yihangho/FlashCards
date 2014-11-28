@@ -5,14 +5,4 @@
   %a.btn.btn-default.pull-right{:href => edit_card_path(@card), :title => "Edit"}
     %i.fa.fa-edit
 
-= render :partial => 'partials/cards/card', :locals => {:card => @card, :show_all => @show_all, :order => @order}
-
-.thumbs-container
-  %span
-    %a.btn.btn-success#thumbs-up-btn{:href => "#", :data => {:card_id => @card.id}}
-      %i.fa.fa-thumbs-o-up
-
-    %a.btn.btn-primary#show-hint-btn{:href => "#", :class => ("disabled" if @show_all)} Show Hint
-
-    %a.btn.btn-danger#thumbs-down-btn{:href => "#", :data => {:card_id => @card.id}}
-      %i.fa.fa-thumbs-o-down
+= render @card

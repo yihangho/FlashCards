@@ -10,8 +10,4 @@
       %a.btn.btn-primary.pull-right{:href => random_path(@deck.title)}
         %i.fa.fa-random
 
-- order = [:word, :definition, :sentence]
-- (@deck ? @deck.cards : @cards).each do |card|
-  = render :partial => "partials/cards/card", :locals => {:card => card, :show_all => true, :order => order.clone}
-  - unless card == (@deck ? @deck.cards : @cards).last
-    %hr
+= render partial: "cards/card", collection: (@deck ? @deck.cards : @cards), spacer_template: "decks/horizontal_rule"

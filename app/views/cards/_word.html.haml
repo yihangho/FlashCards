@@ -1,7 +1,4 @@
-- html_classes = ["well", "card"]
-- html_classes << "hidden" unless show
-
-%div{:class => html_classes}
+%div{:class => "well card"}
   #{card.word} (<i>#{card.word_type}</i>)
   - unless Dictionaries.dictionaries.empty?
     %a.pull-right{:href => '#', :data => {:pronounce => card.word}}
