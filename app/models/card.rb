@@ -65,7 +65,7 @@ class Card < ActiveRecord::Base
       cumulative + score
     end
 
-    choice = (1..cumulative_scores.last).to_a.sample
+    choice = SecureRandom.random_number * cumulative_scores.last
     index = cumulative_scores.index { |s| choice <= s }
     cards[index]
   end
@@ -84,13 +84,18 @@ class Card < ActiveRecord::Base
     created_cards
   end
 
+  # This is equivalent to the old rating column
+  def rating
+    (thumb_up_reviews_count || 0) - (thumb_down_reviews_count || 0)
+  end
+
   # weighted_random_order_score is the relative likelihood of any instance being
   # picked. Essentially, it is the product of hours since last revised * difference in rating between itself and the best performed card.
   # The probability of this card being chosen is score/total score.
   def weighted_random_order_score(now = Time.now, max_score = nil)
     hours = ((now - updated_at.to_time)/3600).ceil
-    max_score = Card.order(:rating => :desc).take.rating if max_score.nil?
-    ((max_score + 1 - rating) ** 1.5).ceil * hours
+    max_score = Card.all.map(&:rating).max if max_score.nil?
+    ((max_score - rating) ** 1.5).ceil * hours
   end
 
   def box_order(first = nil, random = true)
