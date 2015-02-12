@@ -11,17 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150211065431) do
+ActiveRecord::Schema.define(version: 20150212051953) do
 
   create_table "cards", force: true do |t|
     t.string   "word"
-    t.string   "word_type",  default: ""
-    t.string   "definition", default: ""
-    t.string   "synonyms",   default: ""
-    t.string   "antonyms",   default: ""
-    t.string   "sentence",   default: ""
+    t.string   "word_type",                default: ""
+    t.string   "definition",               default: ""
+    t.string   "synonyms",                 default: ""
+    t.string   "antonyms",                 default: ""
+    t.string   "sentence",                 default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "reviews_count"
+    t.integer  "thumb_up_reviews_count"
+    t.integer  "thumb_down_reviews_count"
   end
 
   add_index "cards", ["word"], name: "index_cards_on_word"
