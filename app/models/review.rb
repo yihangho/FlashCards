@@ -17,23 +17,7 @@ class Review < ActiveRecord::Base
     card.decrement!("#{status}_reviews_count") unless card.nil? || status.nil?
   end
 
-  after_update do
-    # TODO Should probably handle also the case when card is changed
-
-    # Possible scenarios:
-    # 1. something -> nil (-1)
-    # 2. nil -> something (+1)
-    # 3. up (down) -> down (up) (+1, -1)
-
-    unless card.nil? || status == status_was
-      if status.nil?
-        card.decrement!("#{status_was}_reviews_count")
-      elsif status_was.nil?
-        card.increment!("#{status}_reviews_count")
-      else
-        card.increment!("#{status}_reviews_count")
-        card.decrement!("#{status_was}_reviews_count")
-      end
-    end
+  def readonly?
+    !new_record?
   end
 end
