@@ -2,6 +2,7 @@ class Card < ActiveRecord::Base
   include ElasticSearch
   elastic_search_attributes :word, :definition, :synonyms, :antonyms, :sentence
 
+  has_many :reviews
   has_and_belongs_to_many :decks
   validates :word, :presence => true
   validates :definition, :presence => true
