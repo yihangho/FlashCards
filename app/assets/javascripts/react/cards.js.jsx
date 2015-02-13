@@ -60,11 +60,11 @@
       else
         return false;
     },
-    postScore: function(score) {
+    postReview: function(status) {
       $.ajax("/cards/rate/" + this.state.card.id, {
         type: "PATCH",
         data: {
-          rating: score
+          status: status
         }
       });
     },
@@ -87,12 +87,12 @@
     },
     thumbUp: function(e) {
       e.preventDefault();
-      this.postScore(1);
+      this.postReview("thumb_up");
       this.fetchNewCard();
     },
     thumbDown: function(e) {
       e.preventDefault();
-      this.postScore(-1);
+      this.postReview("thumb_down");
       this.fetchNewCard();
     },
     showHint: function(e) {

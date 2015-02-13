@@ -43,9 +43,7 @@ class CardsController < ApplicationController
   end
 
   def rate
-    card = Card.find_by(:id => params[:id])
-    rating = params[:rating].to_i
-    card.update_attribute(:rating, card.rating + rating)
+    Card.find_by(:id => params[:id]).reviews.create(status: params[:status])
     render :plain => "OK"
   end
 
