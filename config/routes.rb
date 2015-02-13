@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :todos, :except => :show
   resources :decks
   get 'statistics' => 'statistics#index'
+  get 'cards/:id/statistics' => 'statistics#card'
   get 'random(/:cards(/:style))' => 'cards#random', :as => :random
   root 'cards#random'
 

@@ -6,6 +6,8 @@
       %a{href: "#today", data: {toggle: "tab"}} Today
     %li{role: "presentation"}
       %a{href: "#all", data: {toggle: "tab"}} All
+    %li{role: "presentation"}
+      %a{href: "#cards", data: {toggle: "tab"}} Cards
 
   .tab-content
     .tab-pane.active#today
@@ -34,3 +36,5 @@
       .row
         .col-xs-6  Number of cards
         .col-xs-6= Card.count
+    .tab-pane#cards
+      #ReactCardStatistics{data: {cards: Hash[Card.pluck(:id, :word)].to_json}}

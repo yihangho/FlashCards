@@ -17,6 +17,7 @@
 //= require bootstrap/collapse
 //= require bootstrap/dropdown
 //= require bootstrap/tab
+//= require bootstrap/tooltip
 //= require bootstrap/transition
 //= require moment
 //= require react
