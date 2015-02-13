@@ -1,0 +1,36 @@
+%h1 Statistics
+
+%div{role: "tabpanel"}
+  %ul.nav.nav-tabs{role: "tablist"}
+    %li.active{role: "presentation"}
+      %a{href: "#today", data: {toggle: "tab"}} Today
+    %li{role: "presentation"}
+      %a{href: "#all", data: {toggle: "tab"}} All
+
+  .tab-content
+    .tab-pane.active#today
+      .row
+        .col-xs-6  Number of revisions
+        .col-xs-6= @reviews_today.count
+      .row
+        .col-xs-6  Number of thumbs up
+        .col-xs-6= @reviews_today.thumb_up.count
+      .row
+        .col-xs-6  Number of thumbs down
+        .col-xs-6= @reviews_today.thumb_down.count
+      .row
+        .col-xs-6  Number of cards revised
+        .col-xs-6= Card.where(id: @reviews_today.pluck(:id)).count
+    .tab-pane#all
+      .row
+        .col-xs-6  Number of revisions
+        .col-xs-6= @reviews.count
+      .row
+        .col-xs-6  Number of thumbs up
+        .col-xs-6= @reviews.thumb_up.count
+      .row
+        .col-xs-6  Number of thumbs down
+        .col-xs-6= @reviews.thumb_down.count
+      .row
+        .col-xs-6  Number of cards
+        .col-xs-6= Card.count
