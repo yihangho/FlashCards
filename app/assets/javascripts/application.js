@@ -18,6 +18,7 @@
 //= require bootstrap/dropdown
 //= require bootstrap/tab
 //= require bootstrap/transition
+//= require moment
 //= require react
 //= require turbolinks
 //= require_tree .

@@ -34,6 +34,7 @@ gem 'rest-client'
 gem 'nokogiri'
 gem 'redis'
 gem 'react-rails', '~> 0.12.0.0'
+gem 'momentjs-rails', '~> 2.8.4'
 
 group :production do
   gem 'pg'
