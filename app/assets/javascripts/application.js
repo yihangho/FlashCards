@@ -12,8 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require spin
-//= require jquery.spin
+//= require spin.js
+//= require spin.js/jquery.spin.js
 //= require bootstrap/collapse
 //= require bootstrap/dropdown
 //= require bootstrap/tab

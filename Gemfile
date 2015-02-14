@@ -29,16 +29,19 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'haml-rails'
-gem 'spinjs-rails'
 gem 'rest-client'
 gem 'nokogiri'
 gem 'redis'
 gem 'react-rails', '~> 0.12.0.0'
-gem 'momentjs-rails', '~> 2.8.4'
 
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+end
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-spin.js'
+  gem 'rails-assets-moment'
 end
 
 # Use ActiveModel has_secure_password
