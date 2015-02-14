@@ -13,6 +13,7 @@ Array.prototype.bsearch = (needle) ->
       start = mid + 1
   return false
 
+monster.set("timezone-offset", moment().utcOffset(), 20 * 365);
 
 $(document).on "page:fetch", ->
   $(".spinner-container").removeClass("hidden")

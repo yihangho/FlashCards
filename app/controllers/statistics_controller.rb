@@ -1,7 +1,7 @@
 class StatisticsController < ApplicationController
   def index
     @reviews       = Review.all
-    @reviews_today = Review.where(%Q("#{Review.table_name}"."created_at" >= ?), Date.today)
+    @reviews_today = Review.where(%Q("#{Review.table_name}"."created_at" >= ?), Date.today - cookies["timezone-offset"].to_f.minutes)
   end
 
   def card

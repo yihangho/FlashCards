@@ -21,5 +21,6 @@
 //= require bootstrap/transition
 //= require moment
 //= require react
+//= require cookie-monster
 //= require turbolinks
 //= require_tree .

@@ -42,6 +42,7 @@ end
 source 'https://rails-assets.org' do
   gem 'rails-assets-spin.js'
   gem 'rails-assets-moment'
+  gem 'rails-assets-cookie-monster'
 end
 
 # Use ActiveModel has_secure_password
