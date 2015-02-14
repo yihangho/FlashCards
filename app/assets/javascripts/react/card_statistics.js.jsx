@@ -14,6 +14,7 @@
       return (
         <div>
           <CardSelector cards={ this.props.cards } onCardSelected={ this.loadStatistics } />
+          <Chart data={ this.state.data } />
           <Statistics data={ this.state.data } />
         </div>
       );
@@ -103,6 +104,67 @@
           { options }
         </select>
       );
+    }
+  });
+
+  var Chart = React.createClass({
+    componentDidMount: function() {
+      this.renderChart();
+    },
+    componentDidUpdate: function() {
+      this.renderChart();
+    },
+    renderChart: function() {
+      if (!this.refs.container) {
+        return;
+      }
+
+      google.load("visualization", "1", {
+        packages: ["corechart"],
+        callback: function() {
+          var dataTable = new google.visualization.DataTable();
+          dataTable.addColumn("datetime", "Date");
+          dataTable.addColumn("number", "Status");
+          dataTable.addColumn({type: "string", role: "tooltip"});
+
+          dataTable.addRows(this.props.data.thumbs_up_reviews.map(function(r) {
+            return [new Date(r), 1, moment(r).format("lll")];
+          }));
+
+          dataTable.addRows(this.props.data.thumbs_down_reviews.map(function(r) {
+            return [new Date(r), -1, moment(r).format("lll")];
+          }));
+
+          var option = {
+            legend: {
+              position: "none"
+            },
+            hAxis: {
+              baselineColor: "#CCC"
+            },
+            vAxis: {
+              baselineColor: "#CCC",
+              ticks: [{
+                v: 1,
+                f: "Thumbs Up"
+              }, {
+                v: -1,
+                f: "Thumbs Down"
+              }]
+            }
+          };
+
+          var chart = new google.visualization.ScatterChart(this.refs.container.getDOMNode());
+          chart.draw(dataTable, option);
+        }.bind(this)
+      });
+    },
+    render: function() {
+      if (this.props.data && (this.props.data.thumbs_up_reviews.length || this.props.data.thumbs_down_reviews.length)) {
+        return (<div className="ct-chart ct-perfect-fourth" ref="container"/>)
+      } else {
+        return false;
+      }
     }
   });
 
