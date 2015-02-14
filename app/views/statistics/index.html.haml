@@ -15,26 +15,25 @@
         .col-xs-6  Number of revisions
         .col-xs-6= @reviews_today.count
       .row
-        .col-xs-6  Number of thumbs up
-        .col-xs-6= @reviews_today.thumb_up.count
-      .row
-        .col-xs-6  Number of thumbs down
-        .col-xs-6= @reviews_today.thumb_down.count
-      .row
         .col-xs-6  Number of cards revised
         .col-xs-6= Card.where(id: @reviews_today.pluck(:id)).count
+      .text-center
+        = @reviews_today.thumb_up.count
+        %i.text-success.fa.fa-thumbs-o-up
+        = @reviews_today.thumb_down.count
+        %i.text-danger.fa.fa-thumbs-o-down
     .tab-pane#all
-      .row
-        .col-xs-6  Number of revisions
-        .col-xs-6= @reviews.count
-      .row
-        .col-xs-6  Number of thumbs up
-        .col-xs-6= @reviews.thumb_up.count
-      .row
-        .col-xs-6  Number of thumbs down
-        .col-xs-6= @reviews.thumb_down.count
       .row
         .col-xs-6  Number of cards
         .col-xs-6= Card.count
+      .row
+        .col-xs-6  Number of revisions
+        .col-xs-6= @reviews.count
+      .text-center
+        = @reviews.thumb_up.count
+        %i.text-success.fa.fa-thumbs-o-up
+        = @reviews.thumb_down.count
+        %i.text-danger.fa.fa-thumbs-o-down
+
     .tab-pane#cards
       #ReactCardStatistics{data: {cards: Hash[Card.pluck(:id, :word)].to_json}}

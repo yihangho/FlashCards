@@ -46,16 +46,6 @@
               </div>
             </div>
 
-            <div className="row">
-              <div className="col-xs-6">Number of <i className="fa fa-thumbs-o-up" /></div>
-              <div className="col-xs-6">{ this.props.data.thumbs_up_reviews.length }</div>
-            </div>
-
-            <div className="row">
-              <div className="col-xs-6">Number of <i className="fa fa-thumbs-o-down" /></div>
-              <div className="col-xs-6">{ this.props.data.thumbs_down_reviews.length }</div>
-            </div>
-
             {
               this.props.data.last_revised_at &&
 
@@ -68,6 +58,13 @@
                 </div>
               </div>
             }
+
+            <div className="text-center">
+              { this.props.data.thumbs_up_reviews.length + " " }
+              <i className="text-success fa fa-thumbs-o-up" />
+              { " " + this.props.data.thumbs_down_reviews.length + " " }
+              <i className="text-danger fa fa-thumbs-o-down" />
+            </div>
           </div>
         );
       } else {
