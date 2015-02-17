@@ -62,9 +62,10 @@
     },
     postReview: function(status) {
       $.ajax("/cards/rate/" + this.state.card.id, {
-        type: "PATCH",
+        type: "POST",
         data: {
-          status: status
+          status: status,
+          _method: "patch"
         }
       });
     },
