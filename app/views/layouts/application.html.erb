@@ -56,6 +56,10 @@
                 <li><%= link_to "New", new_todo_path %></li>
               </ul>
             </li>
+
+            <li>
+              <%= link_to "Statistics", statistics_path %>
+            </li>
           </ul>
 
           <% if ElasticSearch.search_enabled? %>
