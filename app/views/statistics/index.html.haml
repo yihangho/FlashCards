@@ -16,7 +16,7 @@
         .col-xs-6= @reviews_today.count
       .row
         .col-xs-6  Number of cards revised
-        .col-xs-6= Card.where(id: @reviews_today.pluck(:id)).count
+        .col-xs-6= @reviews_today.pluck(:card_id).uniq.count
       .text-center
         = @reviews_today.thumb_up.count
         %i.text-success.fa.fa-thumbs-o-up
